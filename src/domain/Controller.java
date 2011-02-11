@@ -289,11 +289,13 @@ public class Controller {
 			boolean nameOK=LiteratureProductManager.getInstance().checkID(idname,((LiteratureProduct)selectedObject));
 			DBLogger.getInstance().print("Controller", "Save Product "+nameOK);
 			if(nameOK){
-				((LiteratureProduct)selectedObject).setName(idname);
+				//((LiteratureProduct)selectedObject).setName(idname);
 				((LiteratureProduct)selectedObject).setProductTitle(title);
 				((LiteratureProduct)selectedObject).setProductYear(year);
-				((LiteratureProduct)selectedObject).setProductRef(ref);
+				((LiteratureProduct)selectedObject).setProductRef(ref);//should save to file
 				((LiteratureProduct)selectedObject).setFileLocation(prodLoc);
+				((LiteratureProduct)selectedObject).persist();
+				this.updateListeners();
 			}
 		}
 	}

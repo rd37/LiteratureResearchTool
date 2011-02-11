@@ -1,6 +1,12 @@
 package domain;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
+
+import databaselogger.DBLogger;
+import databaselogger.DerbyDBPersistance;
 
 public class LiteratureProduct {
 	private LinkedList<LiteratureProduct> parents = new LinkedList<LiteratureProduct>();
@@ -11,9 +17,44 @@ public class LiteratureProduct {
 	private String productTitle;
 	private String productRef;
 	private String productYear;
+	private String productRefFileName=null;
+	
 	
 	public LiteratureProduct(String name){
 		litProdName=new String("Product:"+this.hashCode());
+	}
+	
+	public void persist(){
+		/*
+		 * Create a new file if file does not exist for the reference string.
+		 * save file
+		 * 
+		 * update database with info.
+		 */
+		if(productRefFileName==null){
+			productRefFileName=productTitle+productTitle.hashCode();
+		}
+		File openFile = new File(productRefFileName);
+		
+		try {
+			openFile.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		try {
+			FileWriter writer = new FileWriter(openFile);
+			writer.write(productRef);
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		DBLogger.getInstance().print("LitProd", "wrote bib text to file "+openFile.getAbsolutePath());
+		fileLocation=openFile.getAbsolutePath();
+		DerbyDBPersistance.getInstance().updateLiteratureProduct(this.getName(),fileLocation,productTitle,productYear);
 	}
 	
 	public void addParent(LiteratureProduct product){

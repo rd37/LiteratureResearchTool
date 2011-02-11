@@ -253,6 +253,21 @@ public class DerbyDBPersistance {
 		}
 	}
 	
+	public void updateLiteratureProduct(String productID,String fileLoc,String title,String year){
+		try{
+			productUpdate.setInt(1,productID.hashCode());
+			productUpdate.setString(2, productID);
+			productUpdate.setString(3, fileLoc);
+			productUpdate.setString(4, title);
+			productUpdate.setString(5, year);
+			productUpdate.setInt(6, productID.hashCode());
+			productUpdate.executeUpdate();
+		}catch(Exception e){
+			DBLogger.getInstance().print("Derby", "Update lit product error ");
+			e.printStackTrace();
+		}
+	}
+	
 	public void removeProduct(String productID){
 		try{
 			productRemove.setInt(1, productID.hashCode());
