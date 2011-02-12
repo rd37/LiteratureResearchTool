@@ -58,7 +58,7 @@ public class Controller {
 			if(state==2){
 				LiteratureReview litrev = new LiteratureReview(name);
 				LiteratureReviewManager.getInstance().addLiteratureReview(litrev);
-				litrev.setLitProduct((LiteratureProduct)selectedObject);
+				litrev.setLitProduct((LiteratureProduct)selectedObject,true);
 				this.selectedObject=litrev;
 				state=3;
 				//this.create(domain.System.Rev, "review");
@@ -212,7 +212,7 @@ public class Controller {
 			if(state==5){
 				LiteratureGrouping litGroup = (LiteratureGrouping)selectedObjectStack.getLast();
 				LiteratureReview litReview = (LiteratureReview)selectedObject;
-				litGroup.add(litReview);
+				litGroup.add(litReview,true);
 				selectedObject=selectedObjectStack.removeLast();
 				state=1;
 			}
@@ -221,7 +221,7 @@ public class Controller {
 			if(state==6){
 				LiteratureReview litReview = (LiteratureReview)selectedObjectStack.getLast();
 				Review review = (Review)selectedObject;
-				litReview.addReview(review);
+				litReview.addReview(review,true);
 				selectedObject=selectedObjectStack.removeLast();
 				state=3;
 			}
@@ -269,14 +269,14 @@ public class Controller {
 		if(state==7){
 			LiteratureReview litReview = (LiteratureReview)selectedObjectStack.getLast();
 			LiteratureProduct product = (LiteratureProduct)selectedObject;
-			litReview.setLitProduct(product);
+			litReview.setLitProduct(product,true);
 			state=3;
 			selectedObject=selectedObjectStack.removeLast();
 		}
 		updateListeners();
 	}
 	
-	public void save(String text,String id){
+	public void saveReview(String text,String id){
 		if(state==6){
 			((Review)selectedObject).setText(text);
 		}

@@ -31,9 +31,10 @@ public class LiteratureReview {
 		return litRevName;
 	}
 	
-	public void addReview(Review rev){
+	public void addReview(Review rev,boolean insertDB){
 		review.addElement(rev);
-		DerbyDBPersistance.getInstance().updateLitRevAddReview(this.getName(), rev.getName(), litProduct.getName());
+		if(insertDB)
+			DerbyDBPersistance.getInstance().updateLitRevAddReview(this.getName(), rev.getName(), litProduct.getName());
 	}
 	
 	public void removeReview(Review rev){
@@ -62,12 +63,13 @@ public class LiteratureReview {
 		}
 	}
 	
-	public void setLitProduct(LiteratureProduct litProduct) {
+	public void setLitProduct(LiteratureProduct litProduct,boolean enterDB) {
 		this.litProduct = litProduct;
 		String productID=litProduct.getName();
 		String litRevID=this.getName();
 		DBLogger.getInstance().print("LitRev", "Updated product");
-		DerbyDBPersistance.getInstance().updateLitRevSetProductID(litRevID, productID);
+		if(enterDB)
+			DerbyDBPersistance.getInstance().updateLitRevSetProductID(litRevID, productID);
 	}
 
 	public LiteratureProduct getLitProduct() {

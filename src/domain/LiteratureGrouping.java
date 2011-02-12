@@ -47,10 +47,11 @@ public class LiteratureGrouping {
 		}
 	}
 	
-	public void add(LiteratureReview litrev){
+	public void add(LiteratureReview litrev,boolean update){
 		if(!litrevgrouping.contains(litrev)){
 			litrevgrouping.addElement(litrev);
-			DerbyDBPersistance.getInstance().updateGroupAddLitRev(this.getName(), litrev.getName());
+			if(update)
+				DerbyDBPersistance.getInstance().updateGroupAddLitRev(this.getName(), litrev.getName());
 		}
 	}
 	

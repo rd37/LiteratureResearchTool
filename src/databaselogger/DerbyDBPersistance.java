@@ -148,6 +148,7 @@ public class DerbyDBPersistance {
 			LinkedList<LiteratureReview> listLitRev = new LinkedList<LiteratureReview>();
 			while(litrevset.next()){
 				LiteratureReview litRev = new LiteratureReview(litrevset.getString(1));
+				litRev.setName(litrevset.getString(1));
 				listLitRev.add(litRev);
 			}
 			LiteratureReviewManager.getInstance().setLitRev(listLitRev);
@@ -156,6 +157,7 @@ public class DerbyDBPersistance {
 			LinkedList<Review> listReview = new LinkedList<Review>();
 			while(reviewset.next()){
 				Review review = new Review(reviewset.getString(1));
+				review.setName(reviewset.getString(1));
 				listReview.add(review);
 			}
 			LiteratureReviewManager.getInstance().setReview(listReview);
@@ -172,15 +174,48 @@ public class DerbyDBPersistance {
 			/*
 			 * Ensure objects are linked together properly in the domain
 			 */
-			/*ResultSet grpset2 = sqlStatements.get(0).executeQuery("select distinct grpname from groups");
-			while(grpset2.next()){
-				String grpID = grpset2.getString(2);
-				ResultSet subgrp = sqlStatements.get(0).executeQuery("select * from groups where grpname="+grpID);
-				
-			}*/
+			DBLogger.getInstance().print("Derby", "Created products and set their names ");
+			
+			/*
+			 * Fix groups
+			 */
+			DBLogger.getInstance().print("Derby", "Now try to LInk lit revs into their groups");
+			ResultSet comboRes = sqlStatements.get(0).executeQuery("select g.grpname, l.litrevname from groups g,litrevs l where g.litrevid=l.id");
+			while(comboRes.next()){
+				System.out.println("grp:"+comboRes.getString(1)+" litrev:"+comboRes.getString(2));
+				LiteratureGrouping group = LiteratureGroupManager.getInstance().findLiteratureGrouping(comboRes.getString(1));
+				LiteratureReview litRev = LiteratureReviewManager.getInstance().findLiteratureReview(comboRes.getString(2));
+				group.add(litRev, false);//do not add table entry since table entry already exists
+			}
+			comboRes.close();
+			
+			/*
+			 * Fix products to lit reviews
+			 */
+			ResultSet comboProd = sqlStatements.get(0).executeQuery("select p.productname, l.litrevname from products p, litrevs l where l.productid=p.id");
+			while(comboProd.next()){
+				System.out.println("lit:"+comboProd.getString(1)+" prod:"+comboProd.getString(2));
+				LiteratureReview litRev = LiteratureReviewManager.getInstance().findLiteratureReview(comboProd.getString(2));
+				LiteratureProduct product = LiteratureProductManager.getInstance().findLiteratureProduct(comboProd.getString(1));
+				litRev.setLitProduct(product,false);
+			}
+			comboProd.close();
+			
+			/*
+			 * Fix Reviews
+			 */
+			ResultSet comboReview = sqlStatements.get(0).executeQuery("select l.litrevname, r.reviewname from litrevs l, reviews r where l.reviewid=r.id");
+			while(comboReview.next()){
+				System.out.println("lit:"+comboReview.getString(1)+" review:"+comboReview.getString(2));
+				LiteratureReview litRev = LiteratureReviewManager.getInstance().findLiteratureReview(comboReview.getString(1));
+				Review review = LiteratureReviewManager.getInstance().findReview(comboReview.getString(2));
+				litRev.addReview(review,false);
+			}
+			comboReview.close();
 			conn.commit();
 		}catch(Exception e){
-			DBLogger.getInstance().print("Derby", "error populating domain");
+			DBLogger.getInstance().print("Derby", "error populating domain "+e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -249,6 +284,21 @@ public class DerbyDBPersistance {
 			conn.commit();
 		}catch(Exception e){
 			DBLogger.getInstance().print("Derby", "Error adding table entry "+e);
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateReview(String revID,String fileLoc){
+		try {
+			reviewUpdate.setInt(1, revID.hashCode());
+			reviewUpdate.setString(2,revID);
+			reviewUpdate.setString(3, fileLoc);
+			reviewUpdate.setInt(4, revID.hashCode());
+			reviewUpdate.executeUpdate();
+			conn.commit();
+			DBLogger.getInstance().print("Derby", "Updated Review with new info and file loc");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

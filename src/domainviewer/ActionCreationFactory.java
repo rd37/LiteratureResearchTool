@@ -27,7 +27,7 @@ public class ActionCreationFactory {
 	public void createSaveReview(JButton button,final JTextArea text,final JList reviewList){
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {	
-				ControllerProxy.getInstance().save(text.getText(),"");
+				ControllerProxy.getInstance().saveReview(text.getText(),"");
 			}
 		});
 	}
