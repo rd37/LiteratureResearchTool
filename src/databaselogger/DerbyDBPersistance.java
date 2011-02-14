@@ -161,7 +161,59 @@ public class DerbyDBPersistance {
 					litrevUpdate.executeUpdate();
 				}
 				DBLogger.getInstance().print("Derby", "Product Name change Successful");
+			}else
+			if(type==DerbyDBPersistance.LITREVS){
+				ResultSet prodSet = sqlStatements.get(0).executeQuery("select * from litrevs where id="+oldNameID);
+				while(prodSet.next()){
+					litrevUpdate.setInt(1, newNameID);
+					litrevUpdate.setString(2, newName);
+					litrevUpdate.setInt(3, prodSet.getInt(3));
+					litrevUpdate.setInt(4, prodSet.getInt(4));
+					litrevUpdate.setInt(5, oldNameID);
+					litrevUpdate.executeUpdate();
+				}
+				ResultSet litRevSet = sqlStatements.get(0).executeQuery("select * from groups where litrevid="+oldNameID);
+				while(litRevSet.next()){
+					groupUpdate.setInt(1, litRevSet.getInt(1));
+					groupUpdate.setString(2, litRevSet.getString(2));
+					groupUpdate.setInt(3, newNameID);
+					groupUpdate.setInt(4,litRevSet.getInt(1));
+					groupUpdate.executeUpdate();
+				}
+				DBLogger.getInstance().print("Derby", "Lit Rev Name change Successful");
+			}else
+			if(type==DerbyDBPersistance.REVIEWS){
+				ResultSet prodSet = sqlStatements.get(0).executeQuery("select * from reviews where id="+oldNameID);
+				while(prodSet.next()){
+					reviewUpdate.setInt(1, newNameID);
+					reviewUpdate.setString(2, newName);
+					reviewUpdate.setString(3, prodSet.getString(3));
+					reviewUpdate.setInt(4, oldNameID);
+					reviewUpdate.executeUpdate();
+				}
+				ResultSet litRevSet = sqlStatements.get(0).executeQuery("select * from litrevs where reviewid="+oldNameID);
+				while(litRevSet.next()){
+					litrevUpdate.setInt(1, litRevSet.getInt(1));
+					litrevUpdate.setString(2, litRevSet.getString(2));
+					litrevUpdate.setInt(3, newNameID);
+					litrevUpdate.setInt(4, litRevSet.getInt(4));
+					litrevUpdate.setInt(5, litRevSet.getInt(1));
+					litrevUpdate.executeUpdate();
+				}
+				DBLogger.getInstance().print("Derby", "Review Name change Successful");
+			}else
+			if(type==DerbyDBPersistance.GROUPS){
+				ResultSet litRevSet = sqlStatements.get(0).executeQuery("select * from groups where id="+oldNameID);
+				while(litRevSet.next()){
+					groupUpdate.setInt(1, newNameID);
+					groupUpdate.setString(2, newName);
+					groupUpdate.setInt(3, litRevSet.getInt(3));
+					groupUpdate.setInt(4,litRevSet.getInt(1));
+					groupUpdate.executeUpdate();
+				}
+				DBLogger.getInstance().print("Derby", "Group Name change Successful");
 			}
+			
 		}catch(Exception e){
 			System.out.println("Error replaceing id"+e);
 			e.printStackTrace();
@@ -179,7 +231,7 @@ public class DerbyDBPersistance {
 			while(grpset.next()){
 				DBLogger.getInstance().print("Derby", "Create new Group");
 				LiteratureGrouping grouping = new LiteratureGrouping(grpset.getString(1));
-				grouping.setName(grpset.getString(1));
+				grouping.setName(grpset.getString(1),false);
 				listGrp.add(grouping);
 			}
 			LiteratureGroupManager.getInstance().setGroup(listGrp);
@@ -189,7 +241,7 @@ public class DerbyDBPersistance {
 			while(litrevset.next()){
 				DBLogger.getInstance().print("Derby", "Create new Lit Rev");
 				LiteratureReview litRev = new LiteratureReview(litrevset.getString(1));
-				litRev.setName(litrevset.getString(1));
+				litRev.setName(litrevset.getString(1),false);
 				listLitRev.add(litRev);
 			}
 			LiteratureReviewManager.getInstance().setLitRev(listLitRev);
@@ -199,7 +251,7 @@ public class DerbyDBPersistance {
 			while(reviewset.next()){
 				DBLogger.getInstance().print("Derby", "Create new Review");
 				Review review = new Review(reviewset.getString(1));
-				review.setName(reviewset.getString(1));
+				review.setName(reviewset.getString(1),false);
 				StringBuffer sb = new StringBuffer();
 				try{
 					File openFile = new File(reviewset.getString(2));

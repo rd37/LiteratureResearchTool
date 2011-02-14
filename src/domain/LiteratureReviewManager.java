@@ -64,14 +64,30 @@ public class LiteratureReviewManager {
 		//DerbyDBPersistance.getInstance().removeReviewEntry(this.)
 	}
 	
+	public boolean checkLitRevID(String litrev){
+		if(this.findLiteratureReview(litrev)==null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	public LiteratureReview findLiteratureReview(String id){
 		for(int i=0;i<litreviewmodel.getSize();i++){
 			LiteratureReview litrev = (LiteratureReview)litreviewmodel.get(i);
 			if(litrev.toString().equals(id))
 				return litrev;
 		}
-		DBLogger.getInstance().print("LiteratureReviewManager", "Unable to find id "+id);
+		DBLogger.getInstance().print("LiteratureReviewManager", "Unable to find lit review id "+id);
 		return null;
+	}
+	
+	public boolean checkReviewID(String rev){
+		if(this.findReview(rev)==null){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	public Review findReview(String id){
@@ -80,7 +96,7 @@ public class LiteratureReviewManager {
 			if(rev.toString().equals(id))
 				return rev;
 		}
-		DBLogger.getInstance().print("ReviewManager", "Unable to find id "+id);
+		DBLogger.getInstance().print("ReviewManager", "Unable to find review id "+id);
 		return null;
 	}
 }

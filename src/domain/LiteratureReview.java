@@ -12,14 +12,16 @@ public class LiteratureReview {
 	private LiteratureProduct litProduct;
 	
 	public LiteratureReview(String name){
-		litRevName=new String("litrev:"+this.hashCode());;
+		litRevName=new String("litrev:"+name.hashCode());;
 	}
 	
 	public DefaultListModel getListModel(){
 		return review;
 	}
 	
-	public void setName(String name){
+	public void setName(String name,boolean updatedb) throws Exception{
+		if(updatedb && !name.equals(this.getName()))
+			DerbyDBPersistance.getInstance().replaceID(DerbyDBPersistance.LITREVS, name, this.getName());
 		litRevName=name;
 	}
 	

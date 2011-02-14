@@ -109,7 +109,7 @@ public class MainPanel extends JPanel implements SystemChanged{
 		
 		prodLocation=new JTextField(10);
 		
-		JButton save = new JButton("Save");
+		JButton save = new JButton("Save Products");
 		ActionCreationFactory.getInstance().createSaveProduct(save,prodTitle,prodYear,prodReference,prodLocation,selProdField);
 		panel.add(topPanel,BorderLayout.NORTH);
 		panel.add(prodRefPane,BorderLayout.CENTER);
@@ -148,8 +148,8 @@ public class MainPanel extends JPanel implements SystemChanged{
 		infoPanel.add(reviewNameLabel);infoPanel.add(reviewName);
 		reviewText = new JTextArea(4,4);
 		JScrollPane revPane = new JScrollPane(reviewText);
-		JButton save = new JButton("Save");
-		ActionCreationFactory.getInstance().createSaveReview(save,reviewText,reviewList);
+		JButton save = new JButton("Save Review");
+		ActionCreationFactory.getInstance().createSaveReview(save,reviewText,reviewList,reviewName,selLitRevName);
 		bottom.add(infoPanel,BorderLayout.NORTH);
 		bottom.add(revPane,BorderLayout.CENTER);
 		bottom.add(save,BorderLayout.SOUTH);
@@ -212,9 +212,13 @@ public class MainPanel extends JPanel implements SystemChanged{
 		JList groupList = new JList();
 		JLabel selGroupName = new JLabel("Selected Group Name ");
 		selGroupNameField = new JTextField(10);
+		JButton groupSaveButton = new JButton("Save Group Name");
+		ActionCreationFactory.getInstance().createGroupSaveAction(groupSaveButton,selGroupNameField);
+		JPanel westButtons = new JPanel();westButtons.setLayout(new GridLayout(2,1));
+		westButtons.add(groupDeleteButton);westButtons.add(groupSaveButton);
 		top.setLayout(new BorderLayout());
 		top.add(groupLabel,BorderLayout.NORTH);
-		top.add(groupDeleteButton,BorderLayout.WEST);
+		top.add(westButtons,BorderLayout.WEST);
 		top.add(this.prepareJlist(groupList),BorderLayout.CENTER);
 		JPanel southPanel = new JPanel();
 		southPanel.add(selGroupName);southPanel.add(selGroupNameField);

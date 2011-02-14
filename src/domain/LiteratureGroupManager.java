@@ -19,6 +19,13 @@ public class LiteratureGroupManager {
 		return model;
 	}
 	
+	public boolean checkID(String groupName){
+		LiteratureGrouping grp = this.findLiteratureGrouping(groupName);
+		if(grp==null)
+			return true;
+		else
+			return false;
+	}
 	/*
 	 * Used by DerbyDB to initialize the system
 	 */

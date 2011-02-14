@@ -13,10 +13,12 @@ public class Review {
 	private String textFileLoc=null;
 	
 	public Review(String name){
-		revName=new String("Review:"+this.hashCode());
+		revName=new String("Review:"+name.hashCode());
 	}
 	
-	public void setName(String name){
+	public void setName(String name,boolean updatedb) throws Exception{
+		if(updatedb&&!name.equals(revName))
+			DerbyDBPersistance.getInstance().replaceID(DerbyDBPersistance.REVIEWS, name, revName);
 		revName=name;
 	}
 	

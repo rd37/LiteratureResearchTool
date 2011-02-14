@@ -23,10 +23,16 @@ public class ControllerProxy extends WindowAdapter implements SystemChanged{
 		Controller.getInstance().saveProduct(title, year, ref,prodLoc,idname);
 	}
 	
-	public void saveReview(String text, String id){
-		if(state==6){
-			DBLogger.getInstance().print("ControllerProxy", "saving review "+text+"to "+id);
-			Controller.getInstance().saveReview(text,id);
+	public void saveGroup(String text){
+		if(state==1){
+			Controller.getInstance().saveGroup(text);
+		}
+	}
+	
+	public void saveReview(String text, String revName,String litName){
+		if(state==6 || state==3){
+			DBLogger.getInstance().print("ControllerProxy", "saving review to "+revName+" lit name "+litName);
+			Controller.getInstance().saveReview(text,revName,litName);
 		}
 	}
 	

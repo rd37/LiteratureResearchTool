@@ -24,10 +24,19 @@ public class ActionCreationFactory {
 			}
 		});
 	}
-	public void createSaveReview(JButton button,final JTextArea text,final JList reviewList){
+	
+	public void createSaveReview(JButton button,final JTextArea text,final JList reviewList,final JTextField revName, final JTextField litName){
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {	
-				ControllerProxy.getInstance().saveReview(text.getText(),"");
+				ControllerProxy.getInstance().saveReview(text.getText(),revName.getText(),litName.getText());
+			}
+		});
+	}
+	
+	public void createGroupSaveAction(JButton button, final JTextField groupName){
+		button.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {	
+				ControllerProxy.getInstance().saveGroup(groupName.getText());
 			}
 		});
 	}

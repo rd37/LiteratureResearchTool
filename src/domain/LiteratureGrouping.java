@@ -24,7 +24,9 @@ public class LiteratureGrouping {
 		return null;
 	}
 	
-	public void setName(String name){
+	public void setName(String name,boolean updatedb) throws Exception{
+		if(updatedb&&!name.equals(groupName))
+			DerbyDBPersistance.getInstance().replaceID(DerbyDBPersistance.GROUPS, name, groupName);
 		groupName=name;
 	}
 	

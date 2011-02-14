@@ -276,11 +276,49 @@ public class Controller {
 		updateListeners();
 	}
 	
-	public void saveReview(String text,String id){
+	public void saveReview(String text,String revName,String litName){
 		if(state==6){
+			boolean revNameOK = LiteratureReviewManager.getInstance().checkReviewID(revName);
+			boolean litNameOK = LiteratureReviewManager.getInstance().checkLitRevID(litName);
+			if(revNameOK || litNameOK){
+				LiteratureReview lr =(LiteratureReview)selectedObjectStack.getLast();
+				Review review = ((Review)selectedObject);
+				try {
+					lr.setName(litName,true);
+					review.setName(revName,true);
+				} catch (Exception e) {
+					return;
+				}
+			}
 			((Review)selectedObject).setText(text);
+		}else
+		if(state==3){
+			boolean litNameOK = LiteratureReviewManager.getInstance().checkLitRevID(litName);
+			if(litNameOK){
+				LiteratureReview lr =(LiteratureReview)selectedObject;
+				try {
+					lr.setName(litName,true);
+				} catch (Exception e) {
+					return;
+				}
+			}
 		}
 		updateListeners();
+	}
+	
+	public void saveGroup(String groupName){
+		if(state==1){
+			boolean nameOK=LiteratureGroupManager.getInstance().checkID(groupName);
+			if(nameOK){
+				try {
+					((LiteratureGrouping)selectedObject).setName(groupName,true);
+				} catch (Exception e) {
+					DBLogger.getInstance().print("Controller", "Error changing group name during save "+e);
+					e.printStackTrace();
+					return;
+				}
+			}
+		}
 	}
 	
 	public void saveProduct(String title,String year,String ref,String prodLoc,String idname){
