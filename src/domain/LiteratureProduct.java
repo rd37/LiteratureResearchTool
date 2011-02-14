@@ -21,7 +21,7 @@ public class LiteratureProduct {
 	
 	
 	public LiteratureProduct(String name){
-		litProdName=new String("Product:"+this.hashCode());
+		litProdName=new String("Product:"+name.hashCode());
 	}
 	
 	public void persist(){
@@ -73,7 +73,10 @@ public class LiteratureProduct {
 		children.remove(product);
 	}
 	
-	public void setName(String name){
+	public void setName(String name,boolean dbupdate) throws Exception{
+		DBLogger.getInstance().print("LitProduct", "SN:"+name+" CMP:"+litProdName);
+		if(!name.equals(litProdName)&&dbupdate)
+			DerbyDBPersistance.getInstance().replaceID(DerbyDBPersistance.PRODUCTS,name,this.getName());
 		litProdName=name;
 	}
 	

@@ -1,5 +1,8 @@
 package databaselogger;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -96,8 +99,8 @@ public class DerbyDBPersistance {
             try{
             s.execute("create table groups( id int primary key, grpname varchar(40), litrevid int)");
             s.execute("create table litrevs( id int primary key, litrevname varchar(40), reviewid int, productid int)");
-            s.execute("create table reviews( id int primary key, reviewname varchar(40), reviewfileloc varchar(80) )");
-            s.execute("create table products( id int primary key, productname varchar(40), productfileloc varchar(80),producttitle varchar(80),productyear varchar(4) )");
+            s.execute("create table reviews( id int primary key, reviewname varchar(40), reviewfileloc varchar(160) )");
+            s.execute("create table products( id int primary key, productname varchar(40), productfileloc varchar(160),producttitle varchar(80),productyear varchar(4) )");
             s.execute("create table productlinks( id int primary key, prodparentid int, productchildid int)");
             }catch(Exception e){
             	DBLogger.getInstance().print("Derby", "Tables aleady created, carry on");
@@ -131,6 +134,42 @@ public class DerbyDBPersistance {
 	}
 	
 	/*
+	 * Replace ID
+	 */
+	public void replaceID(int type, String newName,String oldName) throws Exception{
+		try{
+			int newNameID=newName.hashCode();
+			int oldNameID=oldName.hashCode();
+			if(type==DerbyDBPersistance.PRODUCTS){
+				ResultSet prodSet = sqlStatements.get(0).executeQuery("select * from products where id="+oldNameID);
+				while(prodSet.next()){
+					productUpdate.setInt(1, newNameID);
+					productUpdate.setString(2, newName);
+					productUpdate.setString(3, prodSet.getString(3));
+					productUpdate.setString(4, prodSet.getString(4));
+					productUpdate.setString(5, prodSet.getString(5));
+					productUpdate.setInt(6, oldNameID);
+					productUpdate.executeUpdate();
+				}
+				ResultSet litRevSet = sqlStatements.get(0).executeQuery("select * from litrevs where productid="+oldNameID);
+				while(litRevSet.next()){
+					litrevUpdate.setInt(1, litRevSet.getInt(1));
+					litrevUpdate.setString(2, litRevSet.getString(2));
+					litrevUpdate.setInt(3, litRevSet.getInt(3));
+					litrevUpdate.setInt(4,newNameID);
+					litrevUpdate.setInt(5, litRevSet.getInt(1));
+					litrevUpdate.executeUpdate();
+				}
+				DBLogger.getInstance().print("Derby", "Product Name change Successful");
+			}
+		}catch(Exception e){
+			System.out.println("Error replaceing id"+e);
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/*
 	 * Populate Domain Model
 	 */
 	private void populateDomainModel(){
@@ -138,6 +177,7 @@ public class DerbyDBPersistance {
 			ResultSet grpset = sqlStatements.get(0).executeQuery("select distinct grpname from groups");
 			LinkedList<LiteratureGrouping> listGrp = new LinkedList<LiteratureGrouping>();
 			while(grpset.next()){
+				DBLogger.getInstance().print("Derby", "Create new Group");
 				LiteratureGrouping grouping = new LiteratureGrouping(grpset.getString(1));
 				grouping.setName(grpset.getString(1));
 				listGrp.add(grouping);
@@ -147,26 +187,56 @@ public class DerbyDBPersistance {
 			ResultSet litrevset = sqlStatements.get(0).executeQuery("select distinct litrevname from litrevs");
 			LinkedList<LiteratureReview> listLitRev = new LinkedList<LiteratureReview>();
 			while(litrevset.next()){
+				DBLogger.getInstance().print("Derby", "Create new Lit Rev");
 				LiteratureReview litRev = new LiteratureReview(litrevset.getString(1));
 				litRev.setName(litrevset.getString(1));
 				listLitRev.add(litRev);
 			}
 			LiteratureReviewManager.getInstance().setLitRev(listLitRev);
 			
-			ResultSet reviewset = sqlStatements.get(0).executeQuery("select distinct reviewname from reviews");
+			ResultSet reviewset = sqlStatements.get(0).executeQuery("select reviewname,reviewfileloc from reviews");
 			LinkedList<Review> listReview = new LinkedList<Review>();
 			while(reviewset.next()){
+				DBLogger.getInstance().print("Derby", "Create new Review");
 				Review review = new Review(reviewset.getString(1));
 				review.setName(reviewset.getString(1));
+				StringBuffer sb = new StringBuffer();
+				try{
+					File openFile = new File(reviewset.getString(2));
+					BufferedReader reader = new BufferedReader(new FileReader(openFile));
+					String text;
+					while((text=reader.readLine())!=null){
+						sb.append(text+"\n");
+					}
+				}catch(Exception e){
+					DBLogger.getInstance().print("Derby", "Error opening info file of the review "+reviewset.getString(1));
+				}
+				review.setText(sb.toString());
 				listReview.add(review);
 			}
 			LiteratureReviewManager.getInstance().setReview(listReview);
 			
-			ResultSet productset = sqlStatements.get(0).executeQuery("select distinct productname from products");
+			ResultSet productset = sqlStatements.get(0).executeQuery("select productname,productfileloc,producttitle,productyear from products");
 			LinkedList<LiteratureProduct> listProd = new LinkedList<LiteratureProduct>();
 			while(productset.next()){
+				DBLogger.getInstance().print("Derby", "Create new Product");
 				LiteratureProduct product = new LiteratureProduct(productset.getString(1));
-				product.setName(productset.getString(1));
+				product.setName(productset.getString(1),false);
+				product.setFileLocation(productset.getString(2));
+				product.setProductTitle(productset.getString(3));
+				product.setProductYear(productset.getString(4));
+				StringBuffer sb = new StringBuffer();
+				try{
+					File openFile = new File(productset.getString(2));
+					BufferedReader reader = new BufferedReader(new FileReader(openFile));
+					String text;
+					while((text=reader.readLine())!=null){
+						sb.append(text+"\n");
+					}
+				}catch(Exception e){
+					DBLogger.getInstance().print("Derby", "Error opening info file of the product "+productset.getString(1));
+				}
+				product.setProductRef(sb.toString());
 				listProd.add(product);
 			}
 			LiteratureProductManager.getInstance().setProduct(listProd);

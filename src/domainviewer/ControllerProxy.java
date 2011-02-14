@@ -51,27 +51,32 @@ public class ControllerProxy extends WindowAdapter implements SystemChanged{
 			}else
 			if(state==5){
 				Controller.getInstance().deselect();
+			}else
+			if(state==7 ||state==6 || state==8){
+				Controller.getInstance().deselect();
+				Controller.getInstance().deselect();
+				Controller.getInstance().select(type, id);
 			}
 		}else
 		if(type==System.LitRev){
 			if(state==1 || state==0){
 				Controller.getInstance().select(type, id);
 			}else
-			if(state==5 || state==3 || state==2){
+			if(state==3 || state==2){
 				Controller.getInstance().deselect();
 				Controller.getInstance().select(type, id);
 			}else
 			if(state==7){
 				Controller.getInstance().deselect();
 			}else
-			if(state==6){
+			if(state==6 || state==5){
 				Controller.getInstance().deselect();
 				Controller.getInstance().deselect();
 				Controller.getInstance().select(type, id);
 			}
 		}else
 		if(type==System.LitProd){
-			if(state==8 || state==6){
+			if(state==8 || state==6 || state==7){
 				Controller.getInstance().deselect();
 				Controller.getInstance().deselect();
 				Controller.getInstance().select(type, id);

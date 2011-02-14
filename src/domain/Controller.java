@@ -289,7 +289,12 @@ public class Controller {
 			boolean nameOK=LiteratureProductManager.getInstance().checkID(idname,((LiteratureProduct)selectedObject));
 			DBLogger.getInstance().print("Controller", "Save Product "+nameOK);
 			if(nameOK){
-				//((LiteratureProduct)selectedObject).setName(idname);
+				try {
+					((LiteratureProduct)selectedObject).setName(idname,true);
+				} catch (Exception e) {
+					DBLogger.getInstance().print("Controller", "Error changed name durin save");
+					return;
+				}
 				((LiteratureProduct)selectedObject).setProductTitle(title);
 				((LiteratureProduct)selectedObject).setProductYear(year);
 				((LiteratureProduct)selectedObject).setProductRef(ref);//should save to file
