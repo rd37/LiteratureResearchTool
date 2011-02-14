@@ -75,7 +75,7 @@ public class ControllerProxy extends WindowAdapter implements SystemChanged{
 			if(state==7){
 				Controller.getInstance().deselect();
 			}else
-			if(state==6 || state==5){
+			if(state==6 || state==5 || state==8){
 				Controller.getInstance().deselect();
 				Controller.getInstance().deselect();
 				Controller.getInstance().select(type, id);
@@ -87,11 +87,11 @@ public class ControllerProxy extends WindowAdapter implements SystemChanged{
 				Controller.getInstance().deselect();
 				Controller.getInstance().select(type, id);
 			}else
-			if(state==1 || state==2){
+			if(state==1 ){
 				Controller.getInstance().deselect();
 				Controller.getInstance().select(type, id);
 			}else
-			if(state==0 || state==1 || state==3){
+			if(state==0 || state==1 || state==2 || state==3){
 				Controller.getInstance().select(type, id);
 			}
 		}else
@@ -173,5 +173,12 @@ public class ControllerProxy extends WindowAdapter implements SystemChanged{
 	public void showTable(int type,String name){
 		Controller.getInstance().showTable(type,name);
 	}
-
+	
+	public void linkProducts(){
+		Controller.getInstance().linkProducts();
+	}
+	
+	public void unlinkProducts(){
+		Controller.getInstance().unlinkProducts();
+	}
 }

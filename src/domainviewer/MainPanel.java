@@ -42,6 +42,8 @@ public class MainPanel extends JPanel implements SystemChanged{
 	private JTextField reviewName;
 	
 	private JPanel prodPanel1 = new JPanel();
+	private JButton linkProducts;
+	private JButton unlinkProducts;
 	
 	private JPanel prodPanel2 = new JPanel();
 	private JTextField selProdField;
@@ -70,6 +72,7 @@ public class MainPanel extends JPanel implements SystemChanged{
 		setJPanelProd2(prodPanel2);
 		add(prodPanel2);
 		Controller.getInstance().addStateListener(this);
+		this.stateChanged(0);
 	}
 	
 	public JScrollPane prepareJlist(JList list){
@@ -163,10 +166,17 @@ public class MainPanel extends JPanel implements SystemChanged{
 		JPanel listList = new JPanel();
 		JButton setProductInLitRev = new JButton("Set Product");
 		JButton deleteProduct = new JButton("Delete Product");
+		linkProducts = new JButton("Link Products");
+		unlinkProducts = new JButton("UnLink Products");
+		
 		ActionCreationFactory.getInstance().createDeleteAction(deleteProduct, domain.System.LitProd);
 		ActionCreationFactory.getInstance().createSetSelectedListener(setProductInLitRev, domain.System.Group);
-		JPanel buttonPanel = new JPanel();buttonPanel.setLayout(new GridLayout(2,1));
+		ActionCreationFactory.getInstance().createLinkAction(linkProducts);
+		ActionCreationFactory.getInstance().createUnLinkAction(unlinkProducts);
+		
+		JPanel buttonPanel = new JPanel();buttonPanel.setLayout(new GridLayout(4,1));
 		buttonPanel.add(setProductInLitRev);buttonPanel.add(deleteProduct);
+		buttonPanel.add(linkProducts);buttonPanel.add(unlinkProducts);
 		JLabel litProdName = new JLabel("Literature Products");
 		JList litProdList = new JList();
 		litProdList.setModel(LiteratureProductManager.getInstance().getListModel());
@@ -272,7 +282,10 @@ public class MainPanel extends JPanel implements SystemChanged{
     
 	@Override
 	public void stateChanged(int state) {
-		// TODO Auto-generated method stub
-		
+		if(state==8){
+			linkProducts.setEnabled(true);unlinkProducts.setEnabled(true);
+		}else{
+			linkProducts.setEnabled(false);unlinkProducts.setEnabled(false);
+		}
 	}
 }

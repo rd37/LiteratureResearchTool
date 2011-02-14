@@ -59,6 +59,30 @@ public class DerbyDBPersistance {
 	
 	public static DerbyDBPersistance getInstance(){return derby;};
 	
+	public void addLink(String parentName,String childName){
+		DBLogger.getInstance().print("Derby", "Parent "+parentName+" child "+childName);
+		try{
+			productLinkInsert.setInt(1, (parentName.hashCode()+childName.hashCode()) );
+			productLinkInsert.setInt(2, parentName.hashCode());
+			productLinkInsert.setInt(3, childName.hashCode());
+			productLinkInsert.executeUpdate();
+		}catch(Exception e){
+			DBLogger.getInstance().print("Derby", "Error adding links "+e);
+			e.printStackTrace();
+		}
+	}
+	
+	public void unLink(String parentName,String childName){
+		try{
+			productLinkRemove.setInt(1, (parentName.hashCode()+childName.hashCode()) );
+			productLinkRemove.executeUpdate();
+			DBLogger.getInstance().print("Derby", "Unlinkging links successful ");
+		}catch(Exception e){
+			DBLogger.getInstance().print("Derby", "Error removing links "+e);
+			e.printStackTrace();
+		}
+	}
+	
 	/*
 	 * check if tables exist
 	 * if so, then create groups,products,literature review, and reviews
@@ -117,7 +141,7 @@ public class DerbyDBPersistance {
             litrevUpdate = conn.prepareStatement("update litrevs set id=?, litrevname=? , reviewid=? , productid=? where id=?");
             reviewUpdate = conn.prepareStatement("update reviews set id=?, reviewname=? ,reviewfileloc=? where id=?");
             productUpdate = conn.prepareStatement("update products set id=?, productname=? ,productfileloc=? , producttitle=?, productyear=? where id=?");
-            productLinkInsert = conn.prepareStatement("update productlinks set id=?, prodparentid=? ,productchildid=? where id=?");
+            productLinkUpdate = conn.prepareStatement("update productlinks set id=?, prodparentid=? ,productchildid=? where id=?");
             
             groupRemove = conn.prepareStatement("delete from groups where id=?");
             litrevRemove = conn.prepareStatement("delete from litrevs where id=?");
@@ -160,7 +184,25 @@ public class DerbyDBPersistance {
 					litrevUpdate.setInt(5, litRevSet.getInt(1));
 					litrevUpdate.executeUpdate();
 				}
-				DBLogger.getInstance().print("Derby", "Product Name change Successful");
+				ResultSet prodSet2 = sqlStatements.get(0).executeQuery("select * from productlinks where prodparentid="+oldNameID);
+				while(prodSet2.next()){
+					DBLogger.getInstance().print("Derby", "changing parent id");
+					productLinkUpdate.setInt(1, newNameID+prodSet2.getInt(3));
+					productLinkUpdate.setInt(2, newNameID);
+					productLinkUpdate.setInt(3, prodSet2.getInt(3));
+					productLinkUpdate.setInt(4, oldNameID+prodSet2.getInt(3));
+					productLinkUpdate.executeUpdate();
+				}
+				ResultSet prodSet3 = sqlStatements.get(0).executeQuery("select * from productlinks where productchildid="+oldNameID);
+				while(prodSet3.next()){
+					DBLogger.getInstance().print("Derby", "changing child id");
+					productLinkUpdate.setInt(1, prodSet3.getInt(2)+newNameID);
+					productLinkUpdate.setInt(2, prodSet3.getInt(2));
+					productLinkUpdate.setInt(3, newNameID);
+					productLinkUpdate.setInt(4, oldNameID+prodSet3.getInt(2));
+					productLinkUpdate.executeUpdate();
+				}
+				DBLogger.getInstance().print("Derby", "Product Name change Successful-OK");
 			}else
 			if(type==DerbyDBPersistance.LITREVS){
 				ResultSet prodSet = sqlStatements.get(0).executeQuery("select * from litrevs where id="+oldNameID);
@@ -456,6 +498,11 @@ public class DerbyDBPersistance {
 				litrevUpdate.setInt(4,0);
 				litrevUpdate.setInt(5, set.getInt(1));
 				litrevUpdate.executeUpdate();
+			}
+			ResultSet set2 = sqlStatements.get(0).executeQuery("select * from productlinks where prodparentid="+productID.hashCode()+" or productchildid="+productID.hashCode());
+			while(set2.next()){
+				productLinkRemove.setInt(1, set2.getInt(1));
+				productLinkRemove.executeUpdate();
 			}
 			DBLogger.getInstance().print("Derby", "Updated literature reviews to remove product refs");
 		}catch(Exception e){

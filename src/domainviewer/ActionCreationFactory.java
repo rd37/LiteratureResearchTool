@@ -17,6 +17,7 @@ public class ActionCreationFactory {
 	private ActionCreationFactory(){}
 	
 	public static ActionCreationFactory getInstance(){return factory;}
+	
 	public void createSaveProduct(JButton button,final JTextField title,final JTextField year,final JTextArea ref,final JTextField pLoc,final JTextField name){
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -50,6 +51,22 @@ public class ActionCreationFactory {
 				String id = list.getSelectedValue().toString();
 				ControllerProxy.getInstance().select(type, id);
 				list.clearSelection();
+			}
+		});
+	}
+	
+	public void createLinkAction(JButton button){
+		button.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				ControllerProxy.getInstance().linkProducts();
+			}		
+		});
+	}
+	
+	public void createUnLinkAction(JButton button){
+		button.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				ControllerProxy.getInstance().unlinkProducts();
 			}
 		});
 	}

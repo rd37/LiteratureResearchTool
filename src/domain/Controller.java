@@ -343,6 +343,24 @@ public class Controller {
 		}
 	}
 	
+	public void linkProducts(){
+		if(state==8){
+			LiteratureProduct child = (LiteratureProduct)selectedObject;
+			LiteratureProduct parent = (LiteratureProduct)selectedObjectStack.getLast();
+			parent.addChild(child);child.addParent(parent);
+			DerbyDBPersistance.getInstance().addLink(parent.getName(),child.getName());
+		}
+	}
+	
+	public void unlinkProducts(){
+		if(state==8){
+			LiteratureProduct child = (LiteratureProduct)selectedObject;
+			LiteratureProduct parent = (LiteratureProduct)selectedObjectStack.getLast();
+			parent.addChild(child);child.addParent(parent);
+			DerbyDBPersistance.getInstance().unLink(parent.getName(),child.getName());
+		}
+	}
+	
 	public void intialize(){
 		DerbyDBPersistance.getInstance().intialize();
 	}
