@@ -6,6 +6,7 @@ import javax.swing.DefaultListModel;
 
 import databaselogger.DBLogger;
 import databaselogger.DerbyDBPersistance;
+import domainviewer.DatabaseChanged;
 
 public class LiteratureReviewManager {
 	private static LiteratureReviewManager manager = new LiteratureReviewManager();
@@ -16,6 +17,22 @@ public class LiteratureReviewManager {
 	
 	public static LiteratureReviewManager getInstance(){return manager;}
 	
+	private LinkedList<DatabaseChanged> dbListeners = new LinkedList<DatabaseChanged>();
+    
+    public void registerDBChange(DatabaseChanged listener){
+    	dbListeners.add(listener);
+    }
+    
+    public void removeDBChange(DatabaseChanged listener){
+    	dbListeners.remove(listener);
+    }
+    
+    private void updateListeners(int type,DefaultListModel records){
+    	for(int i=0;i<dbListeners.size();i++){
+    		dbListeners.get(i).dbupdate(type,records);
+    	}
+    }
+    
 	/*
 	 * Used by DerbyDB to initialize the system
 	 */
@@ -23,6 +40,7 @@ public class LiteratureReviewManager {
 		for(int i=0;i<list.size();i++){
 			litreviewmodel.addElement(list.get(i));
 		}
+		this.updateListeners(System.LitRev,litreviewmodel);
 	}
 	
 	/*
@@ -32,6 +50,7 @@ public class LiteratureReviewManager {
 		for(int i=0;i<list.size();i++){
 			reviewmodel.addElement(list.get(i));
 		}
+		this.updateListeners(System.Rev,reviewmodel);
 	}
 	
 	
@@ -46,22 +65,24 @@ public class LiteratureReviewManager {
 	public void addLiteratureReview(LiteratureReview litreview){
 		litreviewmodel.addElement(litreview);
 		DerbyDBPersistance.getInstance().newTableEntry(DerbyDBPersistance.LITREVS, litreview);
+		this.updateListeners(System.LitRev,litreviewmodel);
 	}
 	
 	public void removeLiteratureReview(LiteratureReview litreview){
 		litreviewmodel.removeElement(litreview);
 		DerbyDBPersistance.getInstance().removeLiteratureReview(litreview.getName());
+		this.updateListeners(System.LitRev,litreviewmodel);
 	}
 	
 	public void addReview(Review review){
 		reviewmodel.addElement(review);
 		DerbyDBPersistance.getInstance().newTableEntry(DerbyDBPersistance.REVIEWS, review);
+		this.updateListeners(System.Rev,reviewmodel);
 	}
 	
 	public void removeReview(Review review){
-		//DBLogger.getInstance().print("LitRevMan", "delete type "+review);
 		reviewmodel.removeElement(review);
-		//DerbyDBPersistance.getInstance().removeReviewEntry(this.)
+		this.updateListeners(System.Rev,reviewmodel);
 	}
 	
 	public boolean checkLitRevID(String litrev){

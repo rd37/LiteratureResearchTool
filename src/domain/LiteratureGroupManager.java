@@ -31,6 +31,7 @@ public class LiteratureGroupManager {
     		dbListeners.get(i).dbupdate(type,records);
     	}
     }
+    
 	public DefaultListModel getListModel(){
 		return model;
 	}

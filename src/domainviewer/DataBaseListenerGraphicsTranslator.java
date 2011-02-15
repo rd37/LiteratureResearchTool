@@ -2,6 +2,7 @@ package domainviewer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.HashMap;
 
 import graphics.gui.GraphicsElementListener;
 import graphics.gui.GraphicsInterface;
@@ -13,6 +14,10 @@ import javax.swing.JFrame;
 
 import databaselogger.DBLogger;
 //import databaselogger.DerbyDBPersistance;
+import domain.LiteratureGroupManager;
+import domain.LiteratureGrouping;
+import domain.LiteratureProductManager;
+import domain.LiteratureReviewManager;
 
 public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 	private DefaultListModel volBox = new DefaultListModel();
@@ -22,6 +27,7 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 	private DefaultListModel sceneElements = new DefaultListModel();
 	private DefaultListModel scenes = new DefaultListModel();
 	private String sceneID;
+	private HashMap<String,Object> mapping = new HashMap<String,Object>();
 	
 	private GraphicsElementListener gel;
 	
@@ -68,15 +74,17 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 		GraphicsInterface.getInstance().addElementToScene(sceneID, eyeID);
 		GraphicsInterface.getInstance().addViewScreenToScene(sceneID, gvsViewScreenID);
 		GraphicsInterface.getInstance().addPipeLineToScene(sceneID, orthoPipeline);
-		String boxID = GraphicsInterface.getInstance().createBox(-1, -1, -10, 1, 1, -9);
-		GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
+		//String boxID = GraphicsInterface.getInstance().createBox(-1, -1, -10, 1, 1, -9);
+		//GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
 		GraphicsInterface.getInstance().setElementSelectedInScene(sceneID, eyeID);
 		GraphicsInterface.getInstance().updateSceneView(sceneID);
 		
 		/*
 		 * Register to Managers lg, lp, lr
 		 */
-		
+		LiteratureGroupManager.getInstance().registerDBChange(this);
+		LiteratureProductManager.getInstance().registerDBChange(this);
+		LiteratureReviewManager.getInstance().registerDBChange(this);
 	}
 
 	@Override
@@ -85,6 +93,32 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 		 * Update graphical view
 		 */
 		DBLogger.getInstance().print("DBLGT", "Data Base Change Detected "+type);
+		if(type==domain.System.Group){
+			for(int i=0;i<model.getSize();i++){
+				LiteratureGrouping grp = (LiteratureGrouping)model.get(i);
+				if(mapping.containsValue(grp)){
+					//ck links to litrevs
+				}else{
+					//need to add new group and graphic
+					String boxID = GraphicsInterface.getInstance().createBox(-1, -1, -10, 1, 1, -9);
+					GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
+					mapping.put(boxID, grp);
+					//check links
+				}
+			}
+		}else
+		if(type==domain.System.LitProd){
+			
+		}else
+		if(type==domain.System.LitRev){
+			
+		}else
+		if(type==domain.System.Rev){
+			
+		}else
+		if(type==domain.System.ProdLink){
+			
+		}
 		GraphicsInterface.getInstance().updateSceneView();
 	}
 }
