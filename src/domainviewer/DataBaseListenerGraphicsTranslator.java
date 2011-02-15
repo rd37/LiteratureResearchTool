@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import graphics.elements.Box;
 import graphics.gui.GraphicsElementListener;
 import graphics.gui.GraphicsInterface;
 import graphics.management.GraphicsManager;
@@ -112,7 +113,7 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 					}
 				}
 			}
-		}else
+		}/*else
 		if(type==domain.System.LitProd){
 			if(!mapping.containsValue(obj)&&op==0){
 				String boxID = GraphicsInterface.getInstance().createBox(-0.5, -0.5, -20, 0.5, 0.5, -19);
@@ -166,8 +167,35 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 					}
 				}
 			}
-		}else
+		}*/
 		//change mapping positions for presentation in graph
+		organize();
 		GraphicsInterface.getInstance().updateSceneView();
+	}
+	
+	private void organize(){
+		/*
+		 * Groups First
+		 */
+		int groupCount=0;
+		for(int i=0;i<mapping.size();i++){
+			Set<String> set= mapping.keySet();
+			Iterator<String> iSet=set.iterator();
+			while(iSet.hasNext()){
+				String key = (String)iSet.next();//key is id of the graphical element
+				if(mapping.get(key) instanceof LiteratureGrouping){
+					Box box = (Box) GraphicsManager.getInstance().getElement(key);
+					box.getOrigin().set3DCoords(1.25*groupCount, 1, -20);
+					groupCount++;
+				}
+			}
+		}
+		/*
+		 * Lit Revs next with Products
+		 */
+		
+		/*
+		 * Reveiews Next in heirarchy
+		 */
 	}
 }
