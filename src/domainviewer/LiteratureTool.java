@@ -14,6 +14,7 @@ import domain.SystemChanged;
 
 public class LiteratureTool implements SystemChanged{
 	private static JFrame frame = new JFrame("Literature Management Tool");
+	private static JFrame graphicsFrame = new JFrame("Interactive Graphical Tool");
 	
 	public void initialize(){
 		//setup drop menu
@@ -42,7 +43,19 @@ public class LiteratureTool implements SystemChanged{
 		JMenuItem item25 = new JMenuItem("Show ProdLink Table");
 		ActionCreationFactory.getInstance().createShowTableListener(item25, System.ProdLink, "groupname");
 		menu2.add(item21);menu2.add(item22);menu2.add(item23);menu2.add(item24);menu2.add(item25);
-		menubar.add(menu);menubar.add(menu2);
+		
+		JMenu menu3 = new JMenu("View");
+		JMenuItem showItem = new JMenuItem("Graphical View");
+		ActionCreationFactory.getInstance().createGraphicalAction(showItem,graphicsFrame);
+		menu3.add(showItem);
+		
+		/*
+		 * setup graphics frame panels controls and link to system
+		 */
+		DataBaseListenerGraphicsTranslator dbt = new DataBaseListenerGraphicsTranslator();
+		dbt.intialize(graphicsFrame);
+		
+		menubar.add(menu);menubar.add(menu2);menubar.add(menu3);
 		frame.setJMenuBar(menubar);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.setVisible(true);

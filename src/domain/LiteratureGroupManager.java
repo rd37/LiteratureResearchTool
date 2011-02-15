@@ -6,6 +6,7 @@ import javax.swing.DefaultListModel;
 
 import databaselogger.DBLogger;
 import databaselogger.DerbyDBPersistance;
+import domainviewer.DatabaseChanged;
 
 public class LiteratureGroupManager {
 	private static LiteratureGroupManager manager = new LiteratureGroupManager();
@@ -15,6 +16,21 @@ public class LiteratureGroupManager {
 	
 	public static LiteratureGroupManager getInstance(){return manager;}
 	
+	private LinkedList<DatabaseChanged> dbListeners = new LinkedList<DatabaseChanged>();
+    
+    public void registerDBChange(DatabaseChanged listener){
+    	dbListeners.add(listener);
+    }
+    
+    public void removeDBChange(DatabaseChanged listener){
+    	dbListeners.remove(listener);
+    }
+    
+    private void updateListeners(int type,DefaultListModel records){
+    	for(int i=0;i<dbListeners.size();i++){
+    		dbListeners.get(i).dbupdate(type,records);
+    	}
+    }
 	public DefaultListModel getListModel(){
 		return model;
 	}
@@ -33,16 +49,19 @@ public class LiteratureGroupManager {
 		for(int i=0;i<list.size();i++){
 			model.addElement(list.get(i));
 		}
+		this.updateListeners(System.Group,model);
 	}
 	
 	public void addGroup(LiteratureGrouping grouping){
 		model.addElement(grouping);
 		DerbyDBPersistance.getInstance().newTableEntry(DerbyDBPersistance.GROUPS, grouping);
+		this.updateListeners(System.Group,model);
 	}
 	
 	public void removeGroup(LiteratureGrouping grouping){
 		model.removeElement(grouping);
 		DerbyDBPersistance.getInstance().removeLiteratureGrouping(grouping.getName());
+		this.updateListeners(System.Group,model);
 	}
 	
 	public LiteratureGrouping findLiteratureGrouping(String id){
@@ -60,5 +79,6 @@ public class LiteratureGroupManager {
 			LiteratureGrouping grouping = (LiteratureGrouping)model.get(i);
 			grouping.removeLiteratureReview(litrev);
 		}
+		this.updateListeners(System.Group,model);
 	}
 }

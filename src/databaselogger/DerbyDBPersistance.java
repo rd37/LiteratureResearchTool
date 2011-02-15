@@ -19,6 +19,7 @@ import domain.LiteratureProductManager;
 import domain.LiteratureReview;
 import domain.LiteratureReviewManager;
 import domain.Review;
+import domainviewer.DatabaseChanged;
 
 public class DerbyDBPersistance {
 	public static int GROUPS=0;
@@ -52,6 +53,21 @@ public class DerbyDBPersistance {
     private PreparedStatement productLinkRemove = null;
     
     private LinkedList<Statement> sqlStatements = new LinkedList<Statement>();
+    /*private LinkedList<DatabaseChanged> dbListeners = new LinkedList<DatabaseChanged>();
+    
+    public void registerDBChange(DatabaseChanged listener){
+    	dbListeners.add(listener);
+    }
+    
+    public void removeDBChange(DatabaseChanged listener){
+    	dbListeners.remove(listener);
+    }
+    
+    private void updateListeners(int table, int op,String obj1Name,String obj2Name){
+    	for(int i=0;i<dbListeners.size();i++){
+    		dbListeners.get(i).dbupdate(table, op, obj1Name, obj2Name);
+    	}
+    }*/
     
 	private static DerbyDBPersistance derby = new DerbyDBPersistance();
 	
@@ -66,6 +82,7 @@ public class DerbyDBPersistance {
 			productLinkInsert.setInt(2, parentName.hashCode());
 			productLinkInsert.setInt(3, childName.hashCode());
 			productLinkInsert.executeUpdate();
+			//this.updateListeners(5, 1, parentName, childName);
 		}catch(Exception e){
 			DBLogger.getInstance().print("Derby", "Error adding links "+e);
 			e.printStackTrace();
@@ -426,6 +443,7 @@ public class DerbyDBPersistance {
 				productInsert.setString(4, product.getProductTitle());
 				productInsert.setString(5, product.getProductYear());
 				productInsert.executeUpdate();
+				//this.updateListeners(1, 1, product.getName(), null);
 				DBLogger.getInstance().print("Derby", "Success Table Product Insert now ck");
 			}else
 			if(type==DerbyDBPersistance.LITREVS){
