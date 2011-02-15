@@ -1,7 +1,5 @@
 package domainviewer;
 
-import javax.swing.DefaultListModel;
-
 public interface DatabaseChanged {
-	public void dbupdate(int type,DefaultListModel model);
+	public void dbupdates(int type,int op,Object obj);
 }

@@ -27,9 +27,9 @@ public class LiteratureReviewManager {
     	dbListeners.remove(listener);
     }
     
-    private void updateListeners(int type,DefaultListModel records){
+    private void updateListeners(int type,int op,Object obj){
     	for(int i=0;i<dbListeners.size();i++){
-    		dbListeners.get(i).dbupdate(type,records);
+    		dbListeners.get(i).dbupdates(type,op,obj);
     	}
     }
     
@@ -39,8 +39,9 @@ public class LiteratureReviewManager {
 	public void setLitRev(LinkedList<LiteratureReview> list){
 		for(int i=0;i<list.size();i++){
 			litreviewmodel.addElement(list.get(i));
+			this.updateListeners(System.LitRev,0,list.get(i));
 		}
-		this.updateListeners(System.LitRev,litreviewmodel);
+		
 	}
 	
 	/*
@@ -49,8 +50,9 @@ public class LiteratureReviewManager {
 	public void setReview(LinkedList<Review> list){
 		for(int i=0;i<list.size();i++){
 			reviewmodel.addElement(list.get(i));
+			this.updateListeners(System.Rev,0,list.get(i));
 		}
-		this.updateListeners(System.Rev,reviewmodel);
+		
 	}
 	
 	
@@ -65,24 +67,24 @@ public class LiteratureReviewManager {
 	public void addLiteratureReview(LiteratureReview litreview){
 		litreviewmodel.addElement(litreview);
 		DerbyDBPersistance.getInstance().newTableEntry(DerbyDBPersistance.LITREVS, litreview);
-		this.updateListeners(System.LitRev,litreviewmodel);
+		this.updateListeners(System.LitRev,0,litreview);
 	}
 	
 	public void removeLiteratureReview(LiteratureReview litreview){
 		litreviewmodel.removeElement(litreview);
 		DerbyDBPersistance.getInstance().removeLiteratureReview(litreview.getName());
-		this.updateListeners(System.LitRev,litreviewmodel);
+		this.updateListeners(System.LitRev,1,litreview);
 	}
 	
 	public void addReview(Review review){
 		reviewmodel.addElement(review);
 		DerbyDBPersistance.getInstance().newTableEntry(DerbyDBPersistance.REVIEWS, review);
-		this.updateListeners(System.Rev,reviewmodel);
+		this.updateListeners(System.Rev,0,review);
 	}
 	
 	public void removeReview(Review review){
 		reviewmodel.removeElement(review);
-		this.updateListeners(System.Rev,reviewmodel);
+		this.updateListeners(System.Rev,1,review);
 	}
 	
 	public boolean checkLitRevID(String litrev){

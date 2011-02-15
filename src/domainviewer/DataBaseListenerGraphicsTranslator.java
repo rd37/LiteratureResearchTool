@@ -3,6 +3,8 @@ package domainviewer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import graphics.gui.GraphicsElementListener;
 import graphics.gui.GraphicsInterface;
@@ -88,37 +90,84 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 	}
 
 	@Override
-	public void dbupdate(int type,DefaultListModel model) {
+	public void dbupdates(int type,int op,Object obj) {
 		/*
 		 * Update graphical view
 		 */
 		DBLogger.getInstance().print("DBLGT", "Data Base Change Detected "+type);
 		if(type==domain.System.Group){
-			for(int i=0;i<model.getSize();i++){
-				LiteratureGrouping grp = (LiteratureGrouping)model.get(i);
-				if(mapping.containsValue(grp)){
-					//ck links to litrevs
-				}else{
-					//need to add new group and graphic
-					String boxID = GraphicsInterface.getInstance().createBox(-1, -1, -10, 1, 1, -9);
-					GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
-					mapping.put(boxID, grp);
-					//check links
+			if(!mapping.containsValue(obj)&&op==0){
+				String boxID = GraphicsInterface.getInstance().createBox(-1, -1, -20, 1, 1, -19);
+				GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
+				mapping.put(boxID, obj);
+			}else
+			if(!mapping.containsValue(obj)&&op==1){
+				Set<String> set= mapping.keySet();
+				Iterator<String> iSet=set.iterator();
+				while(iSet.hasNext()){
+					String key = (String)iSet.next();
+					if(mapping.get(key)==obj){
+						GraphicsInterface.getInstance().removeElementFromScene(sceneID, key);
+						mapping.remove(key);
+					}
 				}
 			}
 		}else
 		if(type==domain.System.LitProd){
-			
+			if(!mapping.containsValue(obj)&&op==0){
+				String boxID = GraphicsInterface.getInstance().createBox(-0.5, -0.5, -20, 0.5, 0.5, -19);
+				GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
+				mapping.put(boxID, obj);
+			}else
+			if(!mapping.containsValue(obj)&&op==1){
+				Set<String> set= mapping.keySet();
+				Iterator<String> iSet=set.iterator();
+				while(iSet.hasNext()){
+					String key = (String)iSet.next();
+					if(mapping.get(key)==obj){
+						GraphicsInterface.getInstance().removeElementFromScene(sceneID, key);
+						mapping.remove(key);
+					}
+				}
+			}
 		}else
-		if(type==domain.System.LitRev){
-			
+		if(type==domain.System.LitRev&&op==0){
+			if(!mapping.containsValue(obj)){
+				String boxID = GraphicsInterface.getInstance().createBox(-0.5, -0.5, -20, 0.5, 0.5, -19);
+				GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
+				mapping.put(boxID, obj);
+			}else
+			if(!mapping.containsValue(obj)&&op==1){
+				Set<String> set= mapping.keySet();
+				Iterator<String> iSet=set.iterator();
+				while(iSet.hasNext()){
+					String key = (String)iSet.next();
+					if(mapping.get(key)==obj){
+						GraphicsInterface.getInstance().removeElementFromScene(sceneID, key);
+						mapping.remove(key);
+					}
+				}
+			}
 		}else
 		if(type==domain.System.Rev){
-			
+			if(!mapping.containsValue(obj)&&op==0){
+				String boxID = GraphicsInterface.getInstance().createBox(-0.25, -0.25, -20, 0.25, 0.25, -19);
+				GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
+				mapping.put(boxID, obj);
+			}else
+			if(!mapping.containsValue(obj)&&op==1){
+				Set<String> set= mapping.keySet();
+				Iterator<String> iSet=set.iterator();
+				while(iSet.hasNext()){
+					String key = (String)iSet.next();
+					if(mapping.get(key)==obj){
+						GraphicsInterface.getInstance().removeElementFromScene(sceneID, key);
+						mapping.remove(key);
+					}
+				}
+			}
 		}else
-		if(type==domain.System.ProdLink){
-			
-		}
+		//change mapping positions for presentation in graph
 		GraphicsInterface.getInstance().updateSceneView();
 	}
 }

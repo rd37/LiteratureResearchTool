@@ -30,9 +30,9 @@ public class LiteratureProductManager {
     	dbListeners.remove(listener);
     }
     
-    private void updateListeners(int type,DefaultListModel records){
+    private void updateListeners(int type,int op,Object obj){
     	for(int i=0;i<dbListeners.size();i++){
-    		dbListeners.get(i).dbupdate(type,records);
+    		dbListeners.get(i).dbupdates(type,op,obj);
     	}
     }
     
@@ -51,20 +51,21 @@ public class LiteratureProductManager {
 	public void setProduct(LinkedList<LiteratureProduct> list){
 		for(int i=0;i<list.size();i++){
 			model.addElement(list.get(i));
+			this.updateListeners(System.LitProd,0,list.get(i));
 		}
-		this.updateListeners(System.LitProd,model);
+		
 	}
 	
 	public void addProduct(LiteratureProduct product){
 		model.addElement(product);
 		DerbyDBPersistance.getInstance().newTableEntry(DerbyDBPersistance.PRODUCTS, product);
-		this.updateListeners(System.LitProd,model);
+		this.updateListeners(System.LitProd,0,product);
 	}
 	
 	public void removeProduct(LiteratureProduct product){
 		model.removeElement(product);
 		DerbyDBPersistance.getInstance().removeProduct(product.getName());
-		this.updateListeners(System.LitProd,model);
+		this.updateListeners(System.LitProd,1,product);
 	}
 	
 	public LiteratureProduct findLiteratureProduct(String id){
