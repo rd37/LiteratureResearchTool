@@ -13,7 +13,7 @@ public class Review {
 	private String textFileLoc=null;
 	
 	public Review(String name){
-		revName=new String("Review:"+name.hashCode());
+		revName=new String("Review:"+this.hashCode());
 	}
 	
 	public void setName(String name,boolean updatedb) throws Exception{

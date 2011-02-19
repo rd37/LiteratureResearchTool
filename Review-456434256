@@ -1,0 +1,21 @@
+What is problem to solve?
+The fundemental question is whether skype is providning
+ a goodenough voice phone service to the users or is there
+ still room for improvement
+
+Is problem Important?
+It is important because 85 million users use skype.
+
+How was problem attempted before?
+Paper states that no formal study has been made to 
+determine user satisfaction.  partially due to no model, and
+due to the peer to peer nature of skype that makes it difficult to
+capture traffic for modelling puroposes.
+
+why previous solutions not sufficient?
+other solution use signal distortion to determine the 
+Quality of Communication as in [9]-ITU-T,[10]-LCL96
+[11]-BBH01.  draw back is it requires signals from both ends of 
+skype connection.  as well, it only uses speech to deter.
+QoS.
+

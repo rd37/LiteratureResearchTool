@@ -1,0 +1,11 @@
+1. To determine Average Packet Flow rate using Packet sniffer.
+- EWMA exponential weighted moving average.
+Ai+1=(1-a)Ai+aIi
+2. Skype uses iSAC coded by GlobalIP.ISAC can dynamically
+change bit codec size and packet length of packets.
+3. Manzel Hanzel test to determine  whether two functions are
+statisically equivelant.
+4.-Use of Regression analysis to model call duration taking 
+into account several QoS factos, using Cox Model rather than 
+linear-regression.
+5. Cox Model: proportional hazards mdoel.

@@ -21,7 +21,7 @@ public class LiteratureProduct {
 	
 	
 	public LiteratureProduct(String name){
-		litProdName=new String("Product:"+name.hashCode());
+		litProdName=new String("Product:"+this.hashCode());
 	}
 	
 	public void persist(){

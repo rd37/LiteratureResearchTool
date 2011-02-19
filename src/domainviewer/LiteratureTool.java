@@ -67,7 +67,7 @@ public class LiteratureTool implements SystemChanged{
 		frame.getContentPane().add(mainPanel,BorderLayout.CENTER);
 		frame.pack();
 		Controller.getInstance().addStateListener(this);
-		Controller.getInstance().intialize();
+		Controller.getInstance().intialize(dbt);
 	}
 	/**
 	 * @param args

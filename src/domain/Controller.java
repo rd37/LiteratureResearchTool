@@ -6,11 +6,13 @@ import javax.swing.DefaultListModel;
 
 import databaselogger.DBLogger;
 import databaselogger.DerbyDBPersistance;
+import domainviewer.DataBaseListenerGraphicsTranslator;
 
 public class Controller {
 	private static Controller controller = new Controller();
 	private LinkedList<SystemChanged> listeners = new LinkedList<SystemChanged>();
-
+	private DataBaseListenerGraphicsTranslator dbt;
+	
 	private int state=0;
 	private Object selectedObject=null;
 	private LinkedList<Object> selectedObjectStack = new LinkedList<Object>();
@@ -21,6 +23,7 @@ public class Controller {
 			listeners.get(i).stateChanged(state);
 			listeners.get(i).selectChanged(selectedObject);
 		}
+		dbt.organize();
 	}
 	
 	public static Controller getInstance(){return controller;}
@@ -361,7 +364,8 @@ public class Controller {
 		}
 	}
 	
-	public void intialize(){
+	public void intialize(DataBaseListenerGraphicsTranslator dbt){
+		this.dbt=dbt;
 		DerbyDBPersistance.getInstance().intialize();
 	}
 	

@@ -1,0 +1,16 @@
+The paper proposes a framework which can integrate
+agreements with SOA crowd computing platforms.  The addition 
+they provide is the ability to monitor infrastructure which can 
+update the resource model.    Effictively providing adaptive
+assignment of crowd resources to meet client demands.
+
+The key challeges addressed in order to support the negotiation
+of client needs to available crowd resources include Human 
+Network Characterstics, Feedback loops to identify the changing
+crowd environment, and meeting quality gaurantees.
+
+As well, several scheduling algorithms were used to
+compare how well the framework performed in a simulation
+environments.  Results seem to indicate that the Metric Enhanced
+scheduling algorithm as simulation on their framework
+performed best compared to other algorithms.

@@ -19,7 +19,7 @@ import domain.LiteratureProductManager;
 import domain.LiteratureReview;
 import domain.LiteratureReviewManager;
 import domain.Review;
-import domainviewer.DatabaseChanged;
+//import domainviewer.DatabaseChanged;
 
 public class DerbyDBPersistance {
 	public static int GROUPS=0;
@@ -252,7 +252,7 @@ public class DerbyDBPersistance {
 				}
 				ResultSet litRevSet = sqlStatements.get(0).executeQuery("select * from litrevs where reviewid="+oldNameID);
 				while(litRevSet.next()){
-					litrevUpdate.setInt(1, litRevSet.getInt(1));
+					litrevUpdate.setInt(1,litRevSet.getInt(1));
 					litrevUpdate.setString(2, litRevSet.getString(2));
 					litrevUpdate.setInt(3, newNameID);
 					litrevUpdate.setInt(4, litRevSet.getInt(4));
@@ -677,6 +677,7 @@ public class DerbyDBPersistance {
 					return;
 				}
 			}
+			
 			/*
 			 * Need to add new Group entry with lit rev id
 			 */

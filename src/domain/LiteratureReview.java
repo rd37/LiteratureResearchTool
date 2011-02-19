@@ -12,7 +12,7 @@ public class LiteratureReview {
 	private LiteratureProduct litProduct;
 	
 	public LiteratureReview(String name){
-		litRevName=new String("litrev:"+name.hashCode());;
+		litRevName=new String("litrev:"+this.hashCode());;
 	}
 	
 	public DefaultListModel getListModel(){

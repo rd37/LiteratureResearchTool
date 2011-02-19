@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 import graphics.elements.Box;
+import graphics.elements.Line3D;
+import graphics.elements.Sphere;
+import graphics.elements.data.Vector3D;
 import graphics.gui.GraphicsElementListener;
 import graphics.gui.GraphicsInterface;
 import graphics.management.GraphicsManager;
@@ -20,6 +23,7 @@ import databaselogger.DBLogger;
 import domain.LiteratureGroupManager;
 import domain.LiteratureGrouping;
 import domain.LiteratureProductManager;
+import domain.LiteratureReview;
 import domain.LiteratureReviewManager;
 
 public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
@@ -31,7 +35,7 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 	private DefaultListModel scenes = new DefaultListModel();
 	private String sceneID;
 	private HashMap<String,Object> mapping = new HashMap<String,Object>();
-	
+
 	private GraphicsElementListener gel;
 	
 	public DataBaseListenerGraphicsTranslator(){}
@@ -64,7 +68,7 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 		dp.setBorder(BorderFactory.createLineBorder (Color.blue, 2));
 	    dp.setBackground(Color.white);
 		frame.getContentPane().add(dp,BorderLayout.CENTER);
-		
+		frame.addKeyListener(dp);
 		
 		String gvsViewScreenID = GraphicsInterface.getInstance().createGraphicsViewScreen(600, 600);
 		GraphicsInterface.getInstance().registerCanvasWithViewer(dp, gvsViewScreenID, sceneID);
@@ -95,21 +99,23 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 		/*
 		 * Update graphical view
 		 */
-		DBLogger.getInstance().print("DBLGT", "Data Base Change Detected "+type);
 		if(type==domain.System.Group){
 			if(!mapping.containsValue(obj)&&op==0){
-				String boxID = GraphicsInterface.getInstance().createBox(-1, -1, -20, 1, 1, -19);
+				String boxID = GraphicsInterface.getInstance().createBox(-1, -1, -30, 0, 0, -29.5);
 				GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
 				mapping.put(boxID, obj);
+				DBLogger.getInstance().print("DBLGT", "Adding Group map size "+mapping.size());
 			}else
-			if(!mapping.containsValue(obj)&&op==1){
+			if(mapping.containsValue(obj)&&op==1){
 				Set<String> set= mapping.keySet();
 				Iterator<String> iSet=set.iterator();
+				DBLogger.getInstance().print("DBLGT", "Remove Group");
 				while(iSet.hasNext()){
 					String key = (String)iSet.next();
 					if(mapping.get(key)==obj){
 						GraphicsInterface.getInstance().removeElementFromScene(sceneID, key);
 						mapping.remove(key);
+						break;
 					}
 				}
 			}
@@ -131,14 +137,15 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 					}
 				}
 			}
-		}else
-		if(type==domain.System.LitRev&&op==0){
-			if(!mapping.containsValue(obj)){
-				String boxID = GraphicsInterface.getInstance().createBox(-0.5, -0.5, -20, 0.5, 0.5, -19);
+		}*/else
+		if(type==domain.System.LitRev){
+			if(!mapping.containsValue(obj)&&op==0){
+				String boxID = GraphicsInterface.getInstance().createSphere();
 				GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
 				mapping.put(boxID, obj);
+				DBLogger.getInstance().print("DBLGT", "Adding Lit Rev map size "+mapping.size());
 			}else
-			if(!mapping.containsValue(obj)&&op==1){
+			if(mapping.containsValue(obj)&&op==1){
 				Set<String> set= mapping.keySet();
 				Iterator<String> iSet=set.iterator();
 				while(iSet.hasNext()){
@@ -149,7 +156,7 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 					}
 				}
 			}
-		}else
+		}/*else
 		if(type==domain.System.Rev){
 			if(!mapping.containsValue(obj)&&op==0){
 				String boxID = GraphicsInterface.getInstance().createBox(-0.25, -0.25, -20, 0.25, 0.25, -19);
@@ -169,27 +176,48 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 			}
 		}*/
 		//change mapping positions for presentation in graph
-		organize();
+		//organize();
 		GraphicsInterface.getInstance().updateSceneView();
 	}
 	
-	private void organize(){
+	public void organize(){
 		/*
 		 * Groups First
 		 */
 		int groupCount=0;
-		for(int i=0;i<mapping.size();i++){
-			Set<String> set= mapping.keySet();
-			Iterator<String> iSet=set.iterator();
-			while(iSet.hasNext()){
-				String key = (String)iSet.next();//key is id of the graphical element
-				if(mapping.get(key) instanceof LiteratureGrouping){
-					Box box = (Box) GraphicsManager.getInstance().getElement(key);
-					box.getOrigin().set3DCoords(1.25*groupCount, 1, -20);
-					groupCount++;
+		Set<String> set= mapping.keySet();
+		Iterator<String> iSet=set.iterator();
+		while(iSet.hasNext()){
+			String key = (String)iSet.next();//key is id of the graphical element
+			if(mapping.get(key) instanceof LiteratureGrouping){
+				double ax = (1.25*groupCount);
+				double bx = ax-1;
+				DBLogger.getInstance().print("DBLGT", "Change Box"+groupCount+" Coords ax:"+ax+" bx:"+bx);
+				Box box = (Box) GraphicsManager.getInstance().getElement(key);
+				Line3D line = box.getLine();
+				Vector3D a = line.getA();
+				Vector3D b = line.getB();
+				a.set3DCoords(ax,a.getVector()[1],a.getVector()[2]);
+				b.set3DCoords(bx,b.getVector()[1],b.getVector()[2]);
+				
+				LiteratureGrouping group = (LiteratureGrouping) mapping.get(key);
+				DefaultListModel litrev = group.getLitrevgrouping();
+				int litrevCount=0;
+				for(int i=0;i<litrev.getSize();i++){
+					LiteratureReview litReview = (LiteratureReview)litrev.get(i);
+					String shapekey = this.getKey(litReview);
+					Sphere litRevBox = (Sphere)GraphicsManager.getInstance().getElement(shapekey);
+					Vector3D orig = litRevBox.getOrigin();
+					orig.getVector()[0]=a.getVector()[0];
+					orig.getVector()[1]=a.getVector()[1]+1.25;
+					orig.getVector()[2]=a.getVector()[2]+1.25*litrevCount;
+					litrevCount++;
 				}
+				groupCount++;
 			}
 		}
+		
+		//}
 		/*
 		 * Lit Revs next with Products
 		 */
@@ -197,5 +225,17 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 		/*
 		 * Reveiews Next in heirarchy
 		 */
+		GraphicsInterface.getInstance().updateSceneView();
+	}
+	
+	public String getKey(Object obj){
+		Set<String> set= mapping.keySet();
+		Iterator<String> iSet=set.iterator();
+		while(iSet.hasNext()){
+			String key = (String)iSet.next();//key is id of the graphical element
+			if(mapping.get(key)==obj)
+				return key;
+		}
+		return null;
 	}
 }

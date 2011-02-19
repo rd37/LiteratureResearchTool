@@ -1,0 +1,13 @@
+Excellent Paper.  This paper make good use of the PCM
+modelling work to describe the performance of systems 
+during offline evaluation and uses it in a proposed self-
+adaptive achitecture to make resource changes during
+runtime to save on resource usage, but still acheive 
+quality of service requirements.  The proposed performance
+architecture model and process along with a push pull type
+algorithm appeared to acheive some resource savings.  
+The SPECjEnterprise2010 bench mark was used to see
+how well the self adaptive system performed and how much
+resources it needed to get through the specs workload.  In some 
+cases, up to 40% savings were detected by using the
+proposed self-adaptive system.

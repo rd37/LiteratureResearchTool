@@ -149,12 +149,13 @@ public class MainPanel extends JPanel implements SystemChanged{
 		reviewName = new JTextField(10);
 		JPanel infoPanel = new JPanel();infoPanel.setLayout(new GridLayout(1,2));
 		infoPanel.add(reviewNameLabel);infoPanel.add(reviewName);
-		reviewText = new JTextArea(4,4);
+		reviewText = new JTextArea(16,30);
 		JScrollPane revPane = new JScrollPane(reviewText);
 		JButton save = new JButton("Save Review");
 		ActionCreationFactory.getInstance().createSaveReview(save,reviewText,reviewList,reviewName,selLitRevName);
 		bottom.add(infoPanel,BorderLayout.NORTH);
-		bottom.add(revPane,BorderLayout.CENTER);
+		//bottom.add(revPane,BorderLayout.CENTER);
+		groupPanel2.add(revPane);
 		bottom.add(save,BorderLayout.SOUTH);
 		
 		panel.add(top);panel.add(bottom);

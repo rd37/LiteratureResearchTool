@@ -1,0 +1,44 @@
+What is new Idea? Is idea reasonalbe 
+based on their assumptions?
+
+Does this main idea make sense?
+Main idea for the paper is to develop a better model of 
+User satisfaction targeted for Skype.
+-they propose a perceptual index for measing skype user
+ satisfaction. Model is called USI and is based on call
+duration and network QoS metrics. - is geared to skype
+this idea uses passive measurement link ping pong
+probing to get info. from skype call. 
+- Params are easy to compute from measurements. 
+- the compuation is the first and second moments 
+of the packet counting process.
+
+
+
+Is this idea better?
+Compared to 9-11 it is a much better idea I think rather than
+trying to measure voise noise.  much simplier to simply
+measure the network packet rate since voise degradation
+will be based on this anyway.
+
+Is there proof that idea is better?
+
+Is proof reproducable and resonable?
+
+Is the process logic used for assessment good?
+-The assessment started by comparing the proposed USI
+model with an independant set of metrics that measure
+voice interactivity from skype sessions.
+-the assumption is that the more smoothly users interact,
+the better the call.
+-they used a wavelet based algorithm to measure 
+skype session interactivity.
+-they claim that the USI has a strong correlation to the 
+wavelet algorithm thereby validating their model. However 
+I see no proof of this in the paper. see section 5 ron.
+-possible issue with network latency 1%
+
+What is impact of this paper?  
+-Impact of paper seems to state the obvious that better network
+path as selected by peer to peer overlay will improve
+Skype Session QoS.

@@ -1,0 +1,15 @@
+Did they miss something?
+-Model is specific for skype.  so conclusions must be targeted 
+with this in mind.  they must now be careful not to 
+generalize their results.
+-Only really evaluated 3 papers on that use speech. 9-11.
+-they claim that the USI has a strong correlation to the 
+wavelet algorithm thereby validating their model. However 
+I see no proof of this in the paper. -see section 5 ron
+-still not completely convinced that length of call duration is 
+completely depandant on bit rate.  although agreed that there 
+is some correlation. not clear how high of a correlation.
+-why 15pkt/sec threshold for EWMA?
+-no user study done.  may be better than synthesized speech.
+
+Are there holes in their agrument?

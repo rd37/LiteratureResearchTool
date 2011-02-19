@@ -1,0 +1,8 @@
+Paper is a bit weak in describing the simulation setup. 
+More study on how tasks are correlated to each other is 
+probably necessary.  As well there was no description on
+task or client inter-arrival or crowd resource  inter-arrival or 
+inter-departing times from the  system was discussed.  I
+think statistical adding and remvoing of resources from
+the crowd pool would be interesting.-however these issues
+could easily be considered future works
