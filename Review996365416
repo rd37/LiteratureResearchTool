@@ -1,0 +1,16 @@
+Lists Stacks and Queues-data structures
+-Abstract Data type is a mathematical abstraction
+-Objects embedded with operations
+
+for example integers and longs using operators
+ plus,minus form ADT's   As would lists and queues
+and operations pop, size, union , intersection, find.
+
+LinkedList ADT
+Radix Sorting linked list pg 66
+
+STACK ADT
+pg 75
+
+QUEUEADT
+pg 88

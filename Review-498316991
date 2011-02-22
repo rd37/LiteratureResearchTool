@@ -1,0 +1,14 @@
+Trees pg 99:
+Search TREE ADT-Binary pg 109
+Items use comparable interface as described in chapter1.
+supports find, insert, revove.  
+
+Analysis of binary tree page 116.
+Better tree is AVL which self balances and prevents 
+heavy sided trees which binary tree insert and removes
+can create.
+
+Spaly trees are even better for look up and search times.
+pg 130. As well see visitor pattern to print trees.
+
+B-Trees

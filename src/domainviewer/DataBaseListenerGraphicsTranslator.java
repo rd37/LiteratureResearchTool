@@ -140,7 +140,7 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 		}*/else
 		if(type==domain.System.LitRev){
 			if(!mapping.containsValue(obj)&&op==0){
-				String boxID = GraphicsInterface.getInstance().createSphere();
+				String boxID = GraphicsInterface.getInstance().createBox(-1, -1, -30, 0, 0, -29.5);
 				GraphicsInterface.getInstance().addElementToScene(sceneID, boxID);
 				mapping.put(boxID, obj);
 				DBLogger.getInstance().print("DBLGT", "Adding Lit Rev map size "+mapping.size());
@@ -206,11 +206,12 @@ public class DataBaseListenerGraphicsTranslator implements DatabaseChanged {
 				for(int i=0;i<litrev.getSize();i++){
 					LiteratureReview litReview = (LiteratureReview)litrev.get(i);
 					String shapekey = this.getKey(litReview);
-					Sphere litRevBox = (Sphere)GraphicsManager.getInstance().getElement(shapekey);
-					Vector3D orig = litRevBox.getOrigin();
-					orig.getVector()[0]=a.getVector()[0];
-					orig.getVector()[1]=a.getVector()[1]+1.25;
-					orig.getVector()[2]=a.getVector()[2]+1.25*litrevCount;
+					Box litRevBox = (Box)GraphicsManager.getInstance().getElement(shapekey);
+					Line3D lineLR = litRevBox.getLine();
+					Vector3D aLR = lineLR.getA();
+					Vector3D bLR = lineLR.getB();
+					aLR.set3DCoords(a.getVector()[0],a.getVector()[1]-1.25,a.getVector()[2]-1.25*litrevCount);
+					bLR.set3DCoords(b.getVector()[0],b.getVector()[1]-1.25,b.getVector()[2]-1.23*litrevCount);
 					litrevCount++;
 				}
 				groupCount++;

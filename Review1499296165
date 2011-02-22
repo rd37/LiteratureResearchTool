@@ -1,0 +1,13 @@
+-The maxim subsequence problem pg 37
+4 algorithms to solve this problem
+1. iterate thorugh all possibities.
+O(n^3)
+2.less loops pg 39 book. O(n^2)
+3. use divide and conquer technique pg 41 O(NlogN)
+4.single run on data execute in O(n) time
+
+-The GCD problem
+eclides algorithm determines GCD pg 45 is 1.44 LogN
+
+-The find Exp. Problem
+find exponential is 2logN not N if done corrent pg 46.

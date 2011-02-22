@@ -367,6 +367,7 @@ public class Controller {
 	public void intialize(DataBaseListenerGraphicsTranslator dbt){
 		this.dbt=dbt;
 		DerbyDBPersistance.getInstance().intialize();
+		this.updateListeners();
 	}
 	
 	public void shutdown(){
