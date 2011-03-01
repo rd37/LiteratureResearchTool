@@ -182,11 +182,11 @@ public class MainPanel extends JPanel implements SystemChanged{
 		JList litProdList = new JList();
 		litProdList.setModel(LiteratureProductManager.getInstance().getListModel());
 		ActionCreationFactory.getInstance().createJListListeners(litProdList, domain.System.LitProd);
-		prepareJlist(litProdList);
+		//prepareJlist(litProdList);
 		listList.setLayout(new BorderLayout());
 		listList.add(litProdName,BorderLayout.NORTH);
 		listList.add(buttonPanel,BorderLayout.WEST);
-		listList.add(litProdList,BorderLayout.CENTER);
+		listList.add(prepareJlist(litProdList),BorderLayout.CENTER);
 		panel.add(blank);panel.add(listList);
 	}
 	
@@ -206,11 +206,11 @@ public class MainPanel extends JPanel implements SystemChanged{
 		JList litRevList = new JList();
 		ActionCreationFactory.getInstance().createJListListeners(litRevList, domain.System.LitRev);
 		litRevList.setModel(LiteratureReviewManager.getInstance().getLitRevModel());
-		prepareJlist(litRevList);
+		//prepareJlist(litRevList);
 		listList.setLayout(new BorderLayout());
 		listList.add(litRevName,BorderLayout.NORTH);
 		listList.add(buttonPanel,BorderLayout.WEST);
-		listList.add(litRevList,BorderLayout.CENTER);
+		listList.add(prepareJlist(litRevList),BorderLayout.CENTER);
 		panel.add(blank);panel.add(listList);
 	}
 	
