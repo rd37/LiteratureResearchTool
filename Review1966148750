@@ -1,0 +1,45 @@
+Chapter 9 Graph Algorithms
+choice of datastructure and algorithm greatly impact 
+performance.
+
+notes
+-Directed Acyclic Graphs have no cycles.  
+-a graph is connected if each Vertice has a path to
+every other vectice.  
+-if graph is directed, then is is called 
+strongly connected. 
+-if graph is not connected, but underlying graph without 
+direction is connected, then graph is called weakly connected
+-if every vertice is connected to every other vertice, then 
+the graph is called a complete graph
+
+a simple datastructure to represent the graph is a two dimensional
+array of the vertices with T/F if edge is present.
+
+dykstras algorithm is a greedy algorithm see page 309
+
+Acyclic graphs and dykstras algorithm and critical path analysis
+pg 311.
+
+Network Flow Problems pg 314 using Graph Algs
+OK
+
+Minimum spanning tree pg 319
+give the lowest cost to keep graph connected
+
+Prims Algorithm pg 320
+same as dykstras exept for finding minimum to maintain
+connectivity
+
+Kruskals algorithm pg 323
+effectively builds a forest
+
+A biconnected graph is a graph in which a node can be
+removed and the remaining veritices remain connected.
+pg 327
+
+NPCompleteness-pg337
+-if a problem is claimed to be NP-complete, then it must 
+be shown to map to NP.  
+-a NP problem can be solved in Polynomial time by
+a non-determinsitic machine.

@@ -1,0 +1,12 @@
+The Disjoint Set ADT pg 269
+a data structure to solve the equivalence problem.
+
+The dynamic equivalence problem for a,b are a~b?  probelm
+is not explicitly defined. rather it is implicitly defined.
+
+Set S=[a1,a2,a3,a4,a5] then the equivalence class for a1 is a 
+subset of S or partition of S if two elements of S are in the
+same equivalence class, then they are related.
+
+excellent union join example application of generating
+a maze. pg 285.

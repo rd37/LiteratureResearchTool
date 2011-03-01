@@ -1,0 +1,17 @@
+Summary
+Tapestry provides a peer-to-peer overaly routing infrastructure.
+Tapestry support use of virtualization so as to support web 
+application deployment and management.  Since web apps
+have varying resource demands and have mobile users, it
+would be useful to have an overlay so the webapp developer
+can ignore the network and deployment strategies and rely
+on the the overlay to manage the resource requirements of 
+the application.  This frees the devleoper to focus on applicatioin
+specifics which benefit the users.
+
+So application deployments physical location is knownn only
+to tapestry, and no the clients that use the application.  This
+level of indirection frees clients from the application so the
+application can be moved or have its resources changed with
+no noticeable effect from the users perspective.
+

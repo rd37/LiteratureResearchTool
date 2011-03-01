@@ -1,0 +1,36 @@
+I have concern that they claim a uTP client is equally valid 
+as a TCP based client.  They maybe correct, but no work
+was sites at describing the differences and how that may 
+effect the results.
+
+There is a claim in section II that users upload between 10 to 
+100 KBs which they set manually.  Then they claim that this proves
+that publich torrents are less than 100kBS.  This is a very 
+confusing statement.  If they set the limit, how does this show
+that it represents the real world?
+
+An issue to me is that the latency and loss is per client, but it
+should be between client pairs.  And since there are more
+than likely many pairs, then this is an issue with their experiment
+setup.
+
+An issue with the iPlane measurments of how to emulate loss
+and latency over the internet.  There reference is to a website with
+three paper.  But it was not clear where they get the numbers
+from exactly.
+
+Unlcear if there is an issue of proving a cluster is good enough
+to run an experiment when the experiment itself is done on 
+a cluster.
+
+Unlcear if leachers using the loop back (even with NetEm to emulate loss) is
+good enough.  As well, it is unlikely that all clients stay
+with a torrent untill all leachers have completed as described in 
+part II section C of the the experiment description.
+
+Main weakness I see is again the assumption of RTT of 400ms 
+or less as reasonable.?
+
+This research assumes perfect users as well.  I think more
+studdy is needed.
+

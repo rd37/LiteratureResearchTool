@@ -1,0 +1,7 @@
+1.torrent-is a bitorrent sessionn(swarm of peers and seeds) all sharing
+the same file.
+2.peer- for a particular file session is in 1 of two states, seeding
+or leaching.
+3. File-> is broken in peices and peices in to blocks.
+4. Tracker is a server that keeps track of which peers are 
+associated with a particular file.

@@ -1,0 +1,15 @@
+Priority Queue (HEAPS) pg 183
+The priority queue ADT:
+supports two primary ops
+1. insert
+2. deletemin
+generally data structure is a binary-heap.  not a linked list.
+a binary heap is a binary tree that is completely filled.
+Binary heaps can also be used to find kth smallest/largest
+in O(NlogN) time.
+
+Concept of Leftist heaps and Skew Heaps (self adjusting)
+these support the merging operations
+
+Concept of binomial queues which are collections of heap 
+ordered trees.

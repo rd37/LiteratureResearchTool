@@ -1,0 +1,11 @@
+Sorting Chapter 7 pg 225
+
+Types of sorting:
+-Insertion Sort pg 225
+-Shell Sort pg 228
+-Heap Sort pg 232 needs extra array basically does as
+stated in chapter 6 and remove Min and does logN trickle
+up of next smallest.
+-MergeSort pg 235 is a recursive sorting solution
+-Quick Sort pg 240 pick a pivot and partition the data
+-Bucket Sort pg 254

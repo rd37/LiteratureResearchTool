@@ -1,0 +1,78 @@
+Chapter 10 Algorithm Design Techniques - pg353
+Step.  Construct algorithm.  Then choose datastructure
+
+Greedy Algorithm Design.
+Ex Dykstra, Prims and Kruskals
+Eash phase is a decision that appears to be good.  i.e. a local
+optimum is chosen.  When algorithm finishes. we hope the
+local optimum is equal to global optimum.
+
+A simple Scheduling Problem-pg 354
+non-premptive scheduling - once job starts it must complete
+Many ways to view problem
+1. minimize average run time- order jobs least-grtst
+2. minimize completion time.
+
+Huffmans algorithm for file compression-pg357
+this is a greedy algorithm
+
+Aproximate Bin Packing Algorithm-pg 362
+on-line bin packing versus off-line bin packing
+
+on-line alogorithms to solve bin packing pg 363
+Algorithms to ensure number of bins is no more
+than twice optimal-pg 364
+i) Next Fit Alg:
+ii)First Fit Alg:
+iii)Best Fit Alg:
+
+An on-line algorithm does not know when the data
+input might change. so it may in some instances doulbe 
+the number of required bins.
+
+assumption for these algorithms is that the bins are 
+infinite.
+
+Next fit runs in linear time it simply choses the last bin
+an item was assigned to and tries it.   if it does not fit, a new bin i
+created.
+
+FirstFit algorithm does a little better by reviewing already
+created bits first to see if it can find a fit.  If not, then it
+will create a new bin.
+
+BestFit-pg 366
+will fit item in tightest bin bin with most space left.
+
+Offline algorithm.
+NextFit,Firstfit and BestFit can be run on the entire input
+rather than handling one at a time.  A common practice is
+to sort the list first before applying the algorithm.  This is done
+in offline mode.
+
+Divide and Conquer Algorithm pg 370
+
+Now some problems : 
+The Closest Point Problem
+Simple algorithm is to check all distances and compare
+. this take O(N^2) time.
+
+The Selection Problem: pg 377 i.e find kth smallest element
+chptrs 1,6,7 show solutions. 7 shows a variation of quick
+sort to solve the problem. but quicksort may have O(N^2) worst
+case.  but 7.7.6 shows a quick select algorithm which may
+improve on this.  difficulty is in finding the pivot if using this
+algorithm.
+
+Strassens algorithm to break the N^3 requirement of matrix
+mulitplication pg 382. This algorithm is an example of a 
+recursive algorithm.
+
+Dynamic Programming pg 384
+Example of fibonacci number calulation.  using resursive results
+in exponential execution time due to recalculating 
+same many times over.  while a dynamic programming
+approach will solve in linear time.
+
+Second example using dynamic programming for
+Optimal binary seach tree. -pg 389

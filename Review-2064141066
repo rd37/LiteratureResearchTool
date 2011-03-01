@@ -1,0 +1,5 @@
+Tech Used:
+1. Grid5000 cluster
+2. NetEm model: this module simulates packet loss and netowrk
+latency and is available for linux kernel.  it operates between
+the tcp/ip protocol stack and the the Nic card device driver.

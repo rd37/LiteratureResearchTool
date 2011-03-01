@@ -1,0 +1,62 @@
+To use the concept of keybased routing to support structured 
+peer to peer.  i.e. tapestry, chord patry and CAN.
+
+Unstructured peer to peer to include napster gnutella, mojo nation, feenet.
+
+KBR or key based routing routs messages to a live node.  the live
+node has the actual address that the key maps to.  Routing 
+is done in a deterministic manner.
+
+Tapestry  Overlay can supports DHT interface or a decentralized
+object location and routing interface.  These type systems
+scale very well.
+
+another key attribute is the ability to support location based
+ distances when constructing routing layer.
+
+key difference is CAN and CHORD are not aware of how the
+nodes are linked to each other. ie.e they may be close or
+far away over the actual network.
+
+Tapestry and pastry will contruct locally optimal routing tables
+ and maintain them to resuce routing stretches.
+
+----------------Tapestry Algorithms------------------
+-the DOLR networking API  For tapestry apps to use.
+The DOLR networking API is as follows
+   i) publishobject(obj,aID);
+  ii) uppublishobject(obj,aID);
+ iii) routetoobject(ojb,aID);
+ iv) routtonode(N,aID, Exact);
+
+routing is done by prefix matching.  Eash node has a routing
+table to frwd messages.  tapestry routing tables have 
+redundant paths to same objects thereby improving 
+object availability.  
+
+When an object is stored on the server S, S will publish the 
+object to the root node.  Along the way, the intermidiate nodes
+will update date their routing tables with the information.
+so any messages bound for the object will be forwarded 
+towards the object.
+
+tapestry nodes keep routing tables of the objects they store.
+the system must be able then to add and remove tapestry
+nodes from the system. Nodes insertion issues include
+i) which nother nodes need to know of new node.
+ii) the node may become a root node for some objects.
+iii) routing table construction should result in optimal table
+iv) near nodes may want to use the new node N to route 
+object messages.
+
+Node insertion (N) begins at the surrogate S or the nodes surrogate.
+S inn this case should be the Root Node in which Nid can map
+into the existing tapestry network.  So then Sid shares some length
+of the id with Nid, this shared lenght is p.  S sends a mulitcast to
+all nodes with the same prefix (which is length p).   The returned ndoe set
+aka neighbor set is interated through N uses the neighbor set 
+at routing level (length p) aka routing level p to create  a routing level p entries.
+the list is trimmed to closest k in case to many respond.  Then process
+repeats and p-1 until p=1,0.
+
+Good use of SEDA for Event driven IO layer.

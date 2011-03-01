@@ -1,0 +1,9 @@
+Problem
+This paper attempts to determine if bittorrent experiments 
+provide a good plateform that accurately respresent true
+bittorrent performance.  the key issue is that in reality
+bittorrent client downloads and uploads will suffer from
+internet latency and internet packet loss.  since these two
+issues are not relevent in a closed isolated cluster, it is
+reasonable to question if bittorrent experiements on clusters
+are an accurate representation.

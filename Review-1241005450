@@ -1,0 +1,10 @@
+Tapestry
+Networing API is very well described in this paper.  It teaches
+you as well.  very good part II
+
+Good experiment description and I like that they test parameters
+seperately to get an idea of how each metric is effected.
+for example, they isolate nodes from the network to just
+test they processing ability by putting nodes on same machine
+.  
+

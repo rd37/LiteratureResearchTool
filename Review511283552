@@ -1,0 +1,45 @@
+Main Idea
+This paper claims that latency and packet loss only have
+a 15% impact on download completion time.  This result is
+then used as evidence that such a marginal impact proves
+that experiments on cluster are valid results and the latecy
+and packet loss measurements are not very relevant.
+
+So they create a simulated network environment with network 
+latency and packet loss ability.  Then several experiments are
+run to see how they effect the download complete time metric.
+
+The bittorrent setup is a private torrent one tracker with
+ 300 peers.
+
+Two experiment scenarios are used to test the system.
+1. The first scenario is simply to gain some insight into how
+latency can effect download completion time. So latency was 
+statically set between peers.
+2. the second experiment groups peers into groups of haveing
+equal network latency.  The groups latency is greater than
+the intra-group latency.
+
+it is key to remeber that bittorrent clients can control their
+upload and download speeds using limits.  limits translated
+to TCP in how fast the tcp session between peers sends 
+data.
+----------------------------------------------------------------
+From a more technical perspective, the main issue is that 
+bittorrent relies on TCP.  And the TCP protocol is somewhat 
+dependant on latency and packet loss.  In particular, its the TCP 
+ramp up function which increases the TCP data rate if all is well,
+and decreases the TCP data rate if all is not well.  
+
+Control messages exchanged between bittorrent clients
+as well have an effect of which latency and packet loss are
+relevent to.
+
+The key metric used to measure the effect of latency and packet loss
+for bittorrent clients is the download completion time metric.
+What needs to be determined is how latency and packet loss
+effect the download completion time.
+
+
+
+

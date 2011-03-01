@@ -1,1 +1,29 @@
-Chapter 5 Hashing
+Chapter 5 Hashing pg 155
+The Hashtable ADT
+supports only subset of ops supported by binary trees
+hashing support inserting,deleteing and finding in constant
+average time.
+
+Idea behind hashtable is that the hashkey is ineffect the 
+index position of the table. therefor look ups if you have the
+key can occur in constant time.
+
+the objective is to find a good hash function that will 
+distrubute the index uniformly over the table size.
+
+an issue is of course a hashing collision
+
+In the case of collisions, you can perform seperate chaining
+or open addressing to resolve this.  issue if open addressing
+is how to find an open space when a collision occurs.
+soln is to either use linear probing or quadratic probing.
+see pg 168. lastly we can try double hashing to find a spot
+. pg 170
+
+if table gets to full, then create adouble sized table and 
+perform a rehash.
+
+for routines that require order or finding the kth largest
+item, binary trees are better than hash table.
+
+
