@@ -1,0 +1,8 @@
+Splitstream presents a tree-based message multicasting 
+implementation to take adavantage of peer to peer processing 
+environment.  the key challenge overcome is in the disjoint tree
+set construction and maintenance.  As well, since some peers
+have bandwidth restrictions, this needs to be taken into account.
+
+Excellent paper and provides good insight to providing 
+high bandwidth content distribution in an efficient manner.

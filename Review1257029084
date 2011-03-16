@@ -1,0 +1,10 @@
+Locality-Sensity-Hashing is fairly new in the last decade.
+It is proposed for high dimensional searching which the number
+of dimensions can range from 10 to thousands of dimensions.
+it is probabilistic in its results.
+It is proposes as better than using kd-trees or tree-like space
+partitioning schemes.
+2-3 dimensional spacing solutions are well solved for.
+
+
+

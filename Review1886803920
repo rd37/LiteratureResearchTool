@@ -1,0 +1,46 @@
+In tree based mulitcast systems.  the interior nodes are highly
+available and able to foroward the multicast message load
+easily.    This system works will for highly available systems and
+dedicated hardware.  This does not work so well for muli-cast
+in a peer to peer network.  This difference is really the type
+of network you are attempting to multicast over.  This paper
+presents Slipstream as a solution to provide application level multi-cast 
+over peer to peer network.  it provided low overhead in
+maintaing the tree forest of disjointed peers.  
+
+All peers should share the forwarding of messages burden.
+Traditional tree-based multicast don't really fit this requirement.
+
+This is a requirement because we want to take advantage of a 
+peer to peer envirnment.  Another caveat is that todays p2p apps
+are probably high bandwidth.  This is an issue because peers 
+forwarding messages may have limited bandwidth.
+
+Split stream addresses these issues.
+
+Splitstream works by the sender dividing their message into 
+k parts.  Each part will be assigned it's own tree root node.
+Interested peers can add them selve to all k nodes to recieve 
+the message.  They as well indicate how many peices of the k peices
+they may be willing to forward.  This would of course be dependant
+on their bandwdith capability and policies.
+
+Slipstream uses a peer to peer structured overlay to build and
+contruct the trees. i.e. CAN,CHORD,PASTRY,TAPESTRY.
+
+SplitStream was implemented and tested using Planet Lab.
+
+SplitStream peers can control their inbound and outbound
+traffic.  They accomplish inbound traffic by how many strips k
+the peer will receive at any one time. B/k probably.  Out going
+bandwidth is controlled by how many children the peer has.  Th
+There fore output bandwidth requirement is B/k times #children.
+
+Content is somewhat redundant, so if a peer only recieves a subset
+of k messages, the missing messages can be reconstructed.
+
+So node constraint is that a nodes forwarding capacity must
+be greater than its indegree.
+
+Application level multicast tree-based can be build and maintained
+ in a number of ways.  i.e. scalable application layer multicast 

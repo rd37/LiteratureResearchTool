@@ -1,0 +1,41 @@
+The primary data structure used and analysed in this paper 
+was the tree-based multicast system.
+
+see wikipedia document
+http://en.wikipedia.org/wiki/Multicast
+
+Mulitcase means that the source sends a message to all
+interested parties in a single transmission.  the message needs 
+to be copied along the way.
+
+SplitStream used a structrued peer to peer system. In this case
+this was CAN,CHORD,PASTRY and TAPESTRY.
+
+MDC is used to encode video so if peices are missing, the
+quality of video presented is simply degraded.
+
+Properties of Forest Construction Algorithms
+first condition of feasible tree:
+there is a simple check for forest construction feasibility.
+that the sum of nodes in degree is less than the sum of 
+all the nodes outbound requirement (num of children)
+
+Pastry-splitstream uses pastry  and scribe  for overlay 
+
+Pastry Review:
+Pastry is a structured p2p overlay.  In pastry nodes and objects
+have keys.  nodes contain objects.  if you have a message 
+and a key, the message routes through the nodes till it
+finds the node incharge of the object.  the nodeID and key 
+ID will be close.  the closes node to a key is the keys objects 
+root node.  
+
+this low level capability can support DHT's or application 
+layer communication (such as scribe).  The average Pastry 
+delay is less than twice the IP delay from source to destination.
+
+Scribe Review:
+is a way to maintian disjoint trees.  Each scribe tree is a k peice
+of the message.
+
+
