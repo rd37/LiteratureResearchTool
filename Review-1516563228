@@ -1,0 +1,4 @@
+Problem is that the current solution is to overprovision streaming 
+servers in order to meet its channels bandwidth requirements.
+However, as channels require and increasing amount past the 
+provision allocated, the channels suffer.  

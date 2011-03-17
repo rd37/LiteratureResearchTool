@@ -1,14 +1,14 @@
 ----------------------------------------------------------------
-Tue Mar 08 14:12:32 PST 2011:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.7.1.1 - (1040133): instance a816c00e-012e-9787-56f2-000000869d80 
+Wed Mar 16 11:27:00 PDT 2011:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.7.1.1 - (1040133): instance a816c00e-012e-bfeb-b9f4-00000086b3f0 
 on database directory C:\Users\Ron Desmarais\workspace\LiteratureResearchTool\LitToolDataBase  with class loader sun.misc.Launcher$AppClassLoader@11b86e7 
 Loaded from file:/C:/Users/Ron%20Desmarais/workspace/LiteratureResearchTool/LiteratureToolExecutable.jar
 java.vendor=Sun Microsystems Inc.
 java.runtime.version=1.6.0_22-b04
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Tue Mar 08 18:49:07 PST 2011: Shutting down Derby engine
+Wed Mar 16 15:37:18 PDT 2011: Shutting down Derby engine
 ----------------------------------------------------------------
-Tue Mar 08 18:49:07 PST 2011:
-Shutting down instance a816c00e-012e-9787-56f2-000000869d80 on database directory C:\Users\Ron Desmarais\workspace\LiteratureResearchTool\LitToolDataBase with class loader sun.misc.Launcher$AppClassLoader@11b86e7 
+Wed Mar 16 15:37:18 PDT 2011:
+Shutting down instance a816c00e-012e-bfeb-b9f4-00000086b3f0 on database directory C:\Users\Ron Desmarais\workspace\LiteratureResearchTool\LitToolDataBase with class loader sun.misc.Launcher$AppClassLoader@11b86e7 
 ----------------------------------------------------------------

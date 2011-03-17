@@ -1,0 +1,27 @@
+The main idea is to provide dynamically allocated bandwidth
+to the servers as requried by their channels.  This is done by
+changing the channels bandwidth requirement due to a
+projection determined using a novel new on-line algorithm
+which takes into account, number of peers, streaming quality,
+and channel priority.
+
+The goal of P2P is of course to elleviate stress on the streaming
+server.  So the focus of this paper is not on the P2P, but on 
+how to provision for the streaming server efficiently.
+
+The algorithm understands the ISP to keep P2P within an
+ISP.
+
+ Paper using an algorithm called Ration to provision
+bandwidth to the streaming server.  Ration will find the 
+minimum  server capacity within an ISP to divi-up the
+ capacity amung the channels.
+
+Each streaming server is setup with the Ration algorithm.
+
+Experiment is to deploy algorithm and measure real world
+traces which are then replayed in a cluster.
+
+Peers contribute in the system by continously estimating 
+their upload capacity.  If its sending is lower than upload, then
+more connections are requested by server.

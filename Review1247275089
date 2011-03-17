@@ -1,0 +1,14 @@
+Not clear how realistic the idea is that an algorithm can group
+users into ISP. ? each peer sends states to trace servers every 
+5 mins.  does this have an effect of results? not explained.
+-they identify the streaming servers as a bottleneck, because 
+UUSee optimization takes best advantage of the peers in the
+system.  They isolate a single instance where this was quite
+true, but one instance is not enough to claim that the algorithms
+used to manage the peers are not themselves subject to
+improvement.  
+-some issues with math notation describing the 
+problem formulation.
+-conclusion could iterate over a few of the success such as 
+using ration, there is more ISP traffic and less streaming server
+traffic.  Which meets objective of the paper.

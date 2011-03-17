@@ -1,0 +1,16 @@
+Paper clearly describes what it is not focusing on.  For example,
+most papers deal with which topology should be used, or 
+incentive based participation, or how to deal with peer churn.  This
+paper focuses on the streaming server itself.
+-Good description of the tech used.  ie. ration provisioning 
+algorithm.
+-provides support for why this is a problem and that ISP
+can benefit.  In particular, ISP's pay for inter-ISP traffic.  Therefore
+in a P2P system.  It is beneficial for ISP that peers groups 
+are all from a single ISP.
+
+Interesting design for dynamic learning to estimate the 
+stream quality. qc
+
+Good use of work load (traces) to evaluate experiment.  Not 
+clear if issues with one server per ISP.

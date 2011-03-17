@@ -1,0 +1,3 @@
+To deal with multiply ISP, some P2P applicaiton do ISP filtering.
+This paper suggests using this technique as well to minimize
+inter-ISP traffic.

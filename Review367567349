@@ -1,0 +1,10 @@
+1. UUsee is a commercial P2P streaming system
+2. Paper using an algorithm called Ration to provision
+bandwidth to the streaming server.  Ration will find the 
+minimum  server capacity within an ISP to divi-up the
+ capacity amung the channels.
+3. Ration itself uses time series forecasting and dynamic 
+regression techniques taking into account number of peers,
+stream quality, streaming server bandwith usage.  A limited
+window of history is used to determine the prediction.
+4. Uses heuristic inc. water filling approach to solve problem.
